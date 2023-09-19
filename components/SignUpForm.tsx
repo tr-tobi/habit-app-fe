@@ -17,7 +17,10 @@ function SignupForm({ onSignup, checkUniqueUsername }: SignupFormProps) {
     const isUnique = checkUniqueUsername(username);
 
     if (!isUnique) {
-      Alert.alert("Username is not unique", "Please choose a different username.");
+      Alert.alert(
+        "Username is not unique",
+        "Please choose a different username."
+      );
       return;
     }
     // Replace 'https://your-backend-url.com/signup' with backend URL
@@ -29,7 +32,7 @@ function SignupForm({ onSignup, checkUniqueUsername }: SignupFormProps) {
       })
       .then((response) => {
         console.log("Signup successful:", response.data);
-        onSignup(username, email, password); 
+        onSignup(username, email, password);
       })
       .catch((error) => {
         console.error("Error signing up:", error);
