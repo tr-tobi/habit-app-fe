@@ -1,9 +1,13 @@
-import { StatusBar } from 'expo-status-bar';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import Header from './components/Header';
-import Notes from './components/Notes';
-import HabitsList from './components/HabitsList';
+import {PaperProvider} from 'react-native-paper'
 import { useState } from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import NavHeader from './components/NavHeader';
+// import TestScreenA from './screens/TestScreenA';
+// import TestScreenB from './screens/TestScreenB';
+// import TestScreenC from './screens/TestScreenC';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
 const [habits, setHabits] = useState([
@@ -13,23 +17,25 @@ const [habits, setHabits] = useState([
 )
 
   return (
-    
-    <View style={styles.container}>
-      <Header title="Habit Tracker!"/> 
-      <Notes body = {""}/>
-      <HabitsList habits={habits} setHabits={setHabits}/>
+    <NavigationContainer>
+      <PaperProvider>
+        <Stack.Navigator initialRouteName="" screenOptions={{header: NavHeader}}> 
+        {/*initialRouteName=firstPage probably login or home, must match name in stack.screen definition*/}
+          
+          {/* <Stack.Screen name="TestScreenA" options={{title: "THIS IS TestScreenA"}}>
+            {(props) => <TestScreenA/>}
+          </Stack.Screen> */}
+          {/*name is used by navigation buttons, title appears in the header, child funcion is the screen element*/}
 
-    </View>
-   
-  
+          {/* <Stack.Screen name="TestScreenB" options={{title: "THIS IS TestScreenB"}}>
+          {(props) => <TestScreenB/>}
+          </Stack.Screen> */}
+
+          {/* <Stack.Screen name="TestScreenC" options={{title: "THIS IS TestScreenC"}}>
+          {(props) => <TestScreenC/>}
+          </Stack.Screen> */}
+        </Stack.Navigator>
+      </PaperProvider>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
