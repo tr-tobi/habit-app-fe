@@ -1,11 +1,21 @@
-import React, { useState } from "react";
+import React, { SetStateAction, useState } from "react";
 import HabitCard from "./HabitCard";
 
-function HabitsList () {
-    const [habitsList, setHabitsList] = useState()
+interface HabitType {
+    id: number
+    name: string
+    description: string
+    completed: boolean
+}
+interface HabitsListProps {
+    habits: HabitType[];
+    setHabits: (value: SetStateAction<HabitType[]>) => void
+  }
+
+function HabitsList({habits, setHabits}: HabitsListProps) {
 
     return (
-        <HabitCard/>
+        <HabitCard habits={habits} setHabits={setHabits}/>
     )
 }
 

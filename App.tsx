@@ -1,4 +1,5 @@
 import {PaperProvider} from 'react-native-paper'
+import { useState } from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import NavHeader from './components/NavHeader';
@@ -9,6 +10,11 @@ import NavHeader from './components/NavHeader';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+const [habits, setHabits] = useState([
+  { id: 1, name: 'Exercise', description: '20 minutes of movement', completed: false },
+  { id: 2, name: 'Read', description: 'minimum 3 pages', completed: false },
+  { id: 3, name: 'Meditate', description: 'minimum 5 minutes', completed: false }]
+)
 
   return (
     <NavigationContainer>
