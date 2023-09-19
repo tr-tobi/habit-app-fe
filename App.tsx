@@ -18,10 +18,12 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Header title="Habit Tracker!" />
+      <Text>Create an Account!</Text>
       <SignupForm
         onSignup={handleSignup}
         checkUniqueUsername={checkUniqueUsername}
       />
+      <Text>Sign In!</Text>
       <SignInForm onSignIn={handleSignIn} />
     </View>
   );

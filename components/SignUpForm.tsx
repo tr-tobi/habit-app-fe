@@ -1,7 +1,6 @@
-// SignupForm.tsx
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
-import axios from "axios";
+import { postSignUp } from "../requests/Requests";
 
 interface SignupFormProps {
   onSignup: (username: string, email: string, password: string) => void;
@@ -21,22 +20,16 @@ function SignupForm({ onSignup, checkUniqueUsername }: SignupFormProps) {
         "Username is not unique",
         "Please choose a different username."
       );
-      return;
+    } else {
+      postSignUp(username, email, password)
+        .then((response) => {
+          console.log("Signup successful:", response.data);
+          onSignup(username, email, password);
+        })
+        .catch((error) => {
+          console.error("Error signing up:", error);
+        });
     }
-    // Replace 'https://your-backend-url.com/signup' with backend URL
-    axios
-      .post("https://your-backend-url.com/signup", {
-        username,
-        email,
-        password,
-      })
-      .then((response) => {
-        console.log("Signup successful:", response.data);
-        onSignup(username, email, password);
-      })
-      .catch((error) => {
-        console.error("Error signing up:", error);
-      });
   };
 
   return (

@@ -1,7 +1,6 @@
-// SignInForm.tsx
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
-import axios from "axios";
+import { postSignIn } from "../requests/Requests";
 
 interface SignInFormProps {
   onSignIn: (username: string) => void;
@@ -12,17 +11,15 @@ function SignInForm({ onSignIn }: SignInFormProps) {
   const [password, setPassword] = useState("");
 
   const handleSignIn = () => {
-    // Replace 'https://your-backend-url.com/signin' with backend URL
-    axios
-      .post("https://your-backend-url.com/signin", {
-        username,
-        password,
-      })
+    postSignIn(username, password)
       .then((response) => {
         if (response.data.success) {
-          onSignIn(username); 
+          onSignIn(username);
         } else {
-          Alert.alert("Invalid credentials", "Please check your username and password.");
+          Alert.alert(
+            "Invalid credentials",
+            "Please check your username and password."
+          );
         }
       })
       .catch((error) => {
