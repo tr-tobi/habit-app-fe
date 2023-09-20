@@ -27,6 +27,10 @@ const [habits, setHabits] = useState([
           {<Stack.Screen name="Home" options={{title: "Home"}}>
             {(props) => <HomeScreen habits={habits} setHabits={setHabits}/>}
           </Stack.Screen>}
+
+          <Stack.Screen name="SignUp/SignIn" options={{title: "SignUp/SignIn"}}>
+            {(props) => <SignUpPage/>}
+          </Stack.Screen>
           
           {/*name is used by navigation buttons, title appears in the header, child funcion is the screen element*/}
 
