@@ -41,7 +41,7 @@ function HomeScreen ({habits, setHabits}:HabitsListProps){
         <View>
             <HabitsList habits={habits} setHabits={setHabits}/>
             <Button icon ="plus" mode="contained" onPress={handlePress}>Create New Habit</Button>
-            <NewHabitModal visible = {show} onClose = {closeModal} setHabits = {setHabits}/>
+            {/* <NewHabitModal visible = {show} onClose = {closeModal} setHabits = {setHabits}/> */}
         </View>
     )
 }

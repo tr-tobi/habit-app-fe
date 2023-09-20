@@ -36,6 +36,7 @@ function HabitCard({ habits, setHabits }: HabitCardProps) {
             <Checkbox
               status={item.completed ? "checked" : "unchecked"}
               onPress={() => handleCheckboxPress(item.id)}
+              
             />
           )}
         />
