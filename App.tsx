@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import NavHeader from "./components/NavHeader";
 import HomeScreen from "./screens/HomeScreen";
 import SignUpPage from "./screens/SignUpPage";
+import CalendarHabitScreen from "./screens/CalendarHabitScreen";
 // import TestScreenA from './screens/TestScreenA';
 // import TestScreenB from "./screens/TestScreenB";
 // import TestScreenC from './screens/TestScreenC';
@@ -53,6 +54,17 @@ export default function App() {
               }}
             >
               {(props) => <HomeScreen habits={habits} setHabits={setHabits} />}
+            </Stack.Screen>
+          }
+          {
+            <Stack.Screen
+              name="Calendar"
+              options={{
+                title: "Calendar",
+                gestureEnabled: false,
+              }}
+            >
+              {(props) => <CalendarHabitScreen />}
             </Stack.Screen>
           }
 

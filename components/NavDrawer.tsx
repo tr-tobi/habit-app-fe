@@ -36,6 +36,13 @@ export default function NavDrawer({options, showNav, setShowNav}: NavProps) {
             style={styles.drawerItem}
         />
        }
+       {<Drawer.Item
+            icon="calendar"
+            label="Calendar"
+            onTouchStart={() => {goToScreen("Calendar")}}
+            style={styles.drawerItem}
+        />
+       }
         {/*Pass screen name that was set in app.tsx to goToScreen to navigate there*/}
         </Modal>
       </Portal>
