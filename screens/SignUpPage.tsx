@@ -14,7 +14,10 @@ export default function SignUpPage() {
 
   const handleSignIn = (username: string) => {
     console.log("Signing in with:", username);
-    navigation.navigate("Home");
+    navigation.reset({
+      index: 0,
+      routes: [{name: "Home"}],
+    });
   };
 
   const checkUniqueUsername = (username: string) => {
