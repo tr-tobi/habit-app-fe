@@ -3,6 +3,7 @@ import { useState } from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import NavHeader from './components/NavHeader';
+import SignUpPage from './screens/SignUpPage';
 // import TestScreenA from './screens/TestScreenA';
 // import TestScreenB from './screens/TestScreenB';
 // import TestScreenC from './screens/TestScreenC';
@@ -22,9 +23,9 @@ const [habits, setHabits] = useState([
         <Stack.Navigator initialRouteName="" screenOptions={{header: NavHeader}}> 
         {/*initialRouteName=firstPage probably login or home, must match name in stack.screen definition*/}
           
-          {/* <Stack.Screen name="TestScreenA" options={{title: "THIS IS TestScreenA"}}>
-            {(props) => <TestScreenA/>}
-          </Stack.Screen> */}
+          <Stack.Screen name="SignUp/SignIn" options={{title: "SignUp/SignIn"}}>
+            {(props) => <SignUpPage/>}
+          </Stack.Screen>
           {/*name is used by navigation buttons, title appears in the header, child funcion is the screen element*/}
 
           {/* <Stack.Screen name="TestScreenB" options={{title: "THIS IS TestScreenB"}}>
