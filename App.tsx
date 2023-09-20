@@ -4,6 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import NavHeader from './components/NavHeader';
 import HomeScreen from './screens/HomeScreen';
+import SignUpPage from './screens/SignUpPage';
 // import TestScreenA from './screens/TestScreenA';
 // import TestScreenB from './screens/TestScreenB';
 // import TestScreenC from './screens/TestScreenC';
