@@ -29,18 +29,13 @@ export default function NavDrawer({options, showNav, setShowNav}: NavProps) {
         <Portal>
         <Modal visible={showNav} onDismiss={() => setShowNav(false)} contentContainerStyle={styles.drawerContent} style={styles.drawerContainer}>
         <Text style={styles.drawerTitle}>{title}</Text>
-        {/* <Drawer.Item
+        {<Drawer.Item
             icon="home"
-            label="TestScreenA"
-            onTouchStart={() => {goToScreen("TestScreenA")}}
+            label="Home"
+            onTouchStart={() => {goToScreen("Home")}}
             style={styles.drawerItem}
         />
-        <Drawer.Item
-            icon="file"
-            label="TestScreenB"
-            onTouchStart={() => {goToScreen("TestScreenB")}}
-            style={styles.drawerItem}
-        /> */}
+       }
         {/*Pass screen name that was set in app.tsx to goToScreen to navigate there*/}
         </Modal>
       </Portal>
