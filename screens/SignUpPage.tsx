@@ -3,17 +3,18 @@ import { StyleSheet, Text, View } from "react-native";
 import Header from "../components/Header";
 import SignupForm from "../components/SignUpForm";
 import SignInForm from "../components/SignInForm";
-import { useNavigate } from 'react-router-native'
+import { useNavigation } from "@react-navigation/native";
 
 export default function SignUpPage() {
-  const navigate = useNavigate()
-
+  const navigation: any = useNavigation();
   const handleSignup = (username: string) => {
     console.log("Signing up with:", username);
+    navigation.navigate("Home");
   };
 
   const handleSignIn = (username: string) => {
     console.log("Signing in with:", username);
+    navigation.navigate("Home");
   };
 
   const checkUniqueUsername = (username: string) => {
