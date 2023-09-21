@@ -1,47 +1,53 @@
-import React from "react";
-import { Text, View, FlatList } from "react-native";
-import { List, Checkbox } from "react-native-paper";
+import React, { SetStateAction } from "react";
 import { Text, View, FlatList } from "react-native";
 import { List, Checkbox } from "react-native-paper";
 
-interface Habit {
+interface HabitType {
   id: number;
   name: string;
   description: string;
   completed: boolean;
 }
 
-interface HabitCardProps {
-  habits: Habit[];
-  setHabits: React.Dispatch<React.SetStateAction<Habit[]>>;
+interface HabitCompletedType {
+  id: number
+  date: string
+  completed: boolean
 }
 
-function HabitCard({ habits, setHabits }: HabitCardProps) {
+interface HabitCardProps {
+  habits: HabitType[];
+  setHabits: React.Dispatch<React.SetStateAction<HabitType[]>>;
+  habitCompletionData: HabitCompletedType[]
+  setHabitCompletionData: (value: SetStateAction<HabitCompletedType[]>) => void
+}
+
+function HabitCard({ habits, setHabits, habitCompletionData, setHabitCompletionData}: HabitCardProps) {
+
+  const handleHabitCompletion = (id: number) => {
+    const today = new Date().toISOString().split('T')[0];
+
+    const existingEntryIndex = habitCompletionData.findIndex((entry) => entry.id === id && entry.date === today)
+
+    if(existingEntryIndex !== -1){
+      setHabitCompletionData((prevData) => {
+        const updatedData = [...prevData]
+        updatedData[existingEntryIndex].completed = !updatedData[existingEntryIndex].completed
+        return updatedData
+      })
+    } else {
+      setHabitCompletionData((prevData) => [...prevData, { id: id, date:today, completed:true}])
+    }
+    // console.log(habitCompletionData, "<<<<<<<<")
+  }
+
   const handleCheckboxPress = (id: number) => {
     setHabits((prevHabits) =>
       prevHabits.map((habit) =>
         habit.id === id ? { ...habit, completed: !habit.completed } : habit
       )
     );
-  };
-  id: number;
-  name: string;
-  description: string;
-  completed: boolean;
-}
-
-interface HabitCardProps {
-  habits: Habit[];
-  setHabits: React.Dispatch<React.SetStateAction<Habit[]>>;
-}
-
-function HabitCard({ habits, setHabits }: HabitCardProps) {
-  const handleCheckboxPress = (id: number) => {
-    setHabits((prevHabits) =>
-      prevHabits.map((habit) =>
-        habit.id === id ? { ...habit, completed: !habit.completed } : habit
-      )
-    );
+    handleHabitCompletion(id);
   };
 
   return (
@@ -67,7 +73,5 @@ function HabitCard({ habits, setHabits }: HabitCardProps) {
     />
   );
 }
-
-export default HabitCard;
 
 export default HabitCard;
