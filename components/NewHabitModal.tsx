@@ -1,9 +1,10 @@
-import { useState, SetStateAction } from "react";
+import { useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { TextInput, Button, Portal, Modal, Text } from 'react-native-paper'
 import DayPicker from "./DayPicker";
 import CategoryPicker from "./CategoryPicker";
 import ErrorBar from "./ErrorBar";
+import { HabitListSetter } from "../types";
 
 const styles = StyleSheet.create({
     container: {
@@ -20,22 +21,15 @@ const styles = StyleSheet.create({
     }
   });
 
-interface HabitType {
-    id: number
-    name: string
-    description: string
-    completed: boolean
-}
-
 interface NewHabitProps {
     visible: boolean,
     onClose: () => void,
-    setHabits: (value: SetStateAction<HabitType[]>) => void
+    setHabits: HabitListSetter
 }
 
 export default function NewHabitModal({visible, onClose, setHabits}: NewHabitProps) {
     const [habitName, setHabitName] = useState("")
-    const [selectValue, setSelectValue] = useState(0);
+    const [selectValue, setSelectValue] = useState("");
     const [daysValue, setDaysValue] = useState(new Array);
     const [habitDesc, setHabitDesc] = useState("")
     const [errorText, setErrorText] = useState("")
@@ -45,7 +39,7 @@ export default function NewHabitModal({visible, onClose, setHabits}: NewHabitPro
             setErrorText("Name too short")
             return
         }
-        if (selectValue === 0) {
+        if (!selectValue) {
             setErrorText("Select a category")
             return
         }
@@ -64,15 +58,17 @@ export default function NewHabitModal({visible, onClose, setHabits}: NewHabitPro
         
         
         // Do API post thing here and get the ID
-        setHabits(currHabits => {
+        setHabits(prevState => {
             const newHabit = {
-                id: currHabits.length + 1,
+                id: prevState.length + 1,
                 name: habitName.trim(),
                 description: habitDesc.trim(),
+                category: selectValue,
+                occurence: sortedDays,
                 completed: false
             }
 
-            return [...currHabits, newHabit]
+            return [...prevState, newHabit]
         })
 
         handleDismiss()
@@ -80,7 +76,7 @@ export default function NewHabitModal({visible, onClose, setHabits}: NewHabitPro
 
     function handleDismiss() {
         setHabitName("")
-        setSelectValue(0)
+        setSelectValue("")
         setDaysValue(new Array)
         setHabitDesc("")
         onClose()
