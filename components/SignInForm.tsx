@@ -11,20 +11,21 @@ function SignInForm({ onSignIn }: SignInFormProps) {
   const [password, setPassword] = useState("");
 
   const handleSignIn = async () => {
-    try {
-      const response = await postSignIn(username, password);
+    onSignIn(username);
+    // try {
+    //   const response = await postSignIn(username, password);
 
-      if (response.data.success) {
-        onSignIn(username);
-      } else {
-        Alert.alert(
-          "Invalid credentials",
-          "Please check your username and password."
-        );
-      }
-    } catch (error) {
-      console.error("Error signing in:", error);
-    }
+    //   if (response.data.success) {
+    //     onSignIn(username);
+    //   } else {
+    //     Alert.alert(
+    //       "Invalid credentials",
+    //       "Please check your username and password."
+    //     );
+    //   }
+    // } catch (error) {
+    //   console.error("Error signing in:", error);
+    // }
   };
 
   return (
