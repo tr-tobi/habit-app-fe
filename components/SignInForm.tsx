@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
-import { postSignIn } from "../requests/Requests";
+import { hashPassword } from "../utils/hashPassword";
 
 interface SignInFormProps {
-  onSignIn: (username: string) => void;
+  onSignIn: (username: string, password: string) => void;
 }
 
 function SignInForm({ onSignIn }: SignInFormProps) {
@@ -11,21 +11,11 @@ function SignInForm({ onSignIn }: SignInFormProps) {
   const [password, setPassword] = useState("");
 
   const handleSignIn = async () => {
-    onSignIn(username);
-    // try {
-    //   const response = await postSignIn(username, password);
-
-    //   if (response.data.success) {
-    //     onSignIn(username);
-    //   } else {
-    //     Alert.alert(
-    //       "Invalid credentials",
-    //       "Please check your username and password."
-    //     );
-    //   }
-    // } catch (error) {
-    //   console.error("Error signing in:", error);
-    // }
+    try {
+      onSignIn(username, await hashPassword(password));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

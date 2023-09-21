@@ -16,7 +16,7 @@ export default function SignUpPage() {
     console.log("Signing in with:", username);
     navigation.reset({
       index: 0,
-      routes: [{name: "Home"}],
+      routes: [{ name: "Home" }],
     });
   };
 

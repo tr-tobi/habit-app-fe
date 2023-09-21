@@ -1,41 +1,23 @@
-import React, { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
-import { postSignUp } from "../requests/Requests";
+import React, { useEffect, useState } from "react";
+import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { User, getUsers } from "../requests/Requests";
+import { hashPassword } from "../utils/hashPassword";
 
-interface SignupFormProps {
-  onSignup: (username: string, email: string, password: string) => void;
-  checkUniqueUsername: (username: string) => boolean;
-}
-
-function SignupForm({ onSignup, checkUniqueUsername }: SignupFormProps) {
+function SignupForm() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [users, setUsers] = useState<User[]>();
+  const isDuplicateUserName = users?.some((user) => user.username === username);
+  const isDuplicateEmail = users?.some((user) => user.email === email);
+
+  useEffect(() => {
+    const res = getUsers();
+    setUsers(res);
+  }, []);
 
   const handleSignup = async () => {
-    try {
-      const isUnique = checkUniqueUsername(username);
-
-      if (!isUnique) {
-        Alert.alert(
-          "Username is not unique",
-          "Please choose a different username."
-        );
-      } else {
-        const response = await postSignUp(username, email, password);
-
-        if (response.data.success) {
-          onSignup(username, email, password);
-        } else {
-          Alert.alert(
-            "Error signing up",
-            "An error occurred during sign-up. Please try again."
-          );
-        }
-      }
-    } catch (error) {
-      console.error("Error signing up:", error);
-    }
+    console.log({ username, email, password: await hashPassword(password) });
   };
 
   return (
@@ -47,6 +29,11 @@ function SignupForm({ onSignup, checkUniqueUsername }: SignupFormProps) {
         value={username}
         placeholder="Enter your username"
       />
+      {isDuplicateUserName && (
+        <Text style={{ color: "red" }}>
+          The username you've entered already exists
+        </Text>
+      )}
 
       <Text style={styles.label}>Email:</Text>
       <TextInput
@@ -57,6 +44,12 @@ function SignupForm({ onSignup, checkUniqueUsername }: SignupFormProps) {
         keyboardType="email-address"
         autoCapitalize="none"
       />
+
+      {isDuplicateEmail && (
+        <Text style={{ color: "red" }}>
+          The email you've entered already exists
+        </Text>
+      )}
 
       <Text style={styles.label}>Password:</Text>
       <TextInput
