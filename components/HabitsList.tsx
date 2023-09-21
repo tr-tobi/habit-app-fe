@@ -1,21 +1,26 @@
-import React, { SetStateAction, useState } from "react";
+import { SetStateAction, useState, Dispatch } from "react";
+import { FlatList } from "react-native";
 import HabitCard from "./HabitCard";
+import { Habit, HabitListSetter, HabitSetter } from "../types";
 
-interface HabitType {
-    id: number
-    name: string
-    description: string
-    completed: boolean
-}
 interface HabitsListProps {
-    habits: HabitType[];
-    setHabits: (value: SetStateAction<HabitType[]>) => void
-  }
+    habits: Habit[];
+    setHabits: HabitListSetter
+    setHabitToEdit: HabitSetter
+    openEdit: () => void
+}
 
-function HabitsList({habits, setHabits}: HabitsListProps) {
+function HabitsList({habits, setHabits, setHabitToEdit, openEdit}: HabitsListProps) {
+    const [showEdit, setShowEdit] = useState(false)
 
     return (
-        <HabitCard habits={habits} setHabits={setHabits}/>
+        <FlatList
+            data={habits}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+                <HabitCard habit={item} setHabits={setHabits} setHabitToEdit={setHabitToEdit} showEdit={showEdit} setShowEdit={setShowEdit} openEdit={openEdit}/>
+            )}
+        />
     )
 }
 
