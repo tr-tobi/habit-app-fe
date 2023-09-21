@@ -1,7 +1,7 @@
 import { SetStateAction } from 'react';
 import { Drawer, Portal, Modal, Text } from 'react-native-paper';
 import { StyleSheet } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 interface NavProps {
     options: any
@@ -43,7 +43,6 @@ export default function NavDrawer({options, showNav, setShowNav}: NavProps) {
             style={styles.drawerItem}
         />
        }
-        {/*Pass screen name that was set in app.tsx to goToScreen to navigate there*/}
         </Modal>
       </Portal>
     )
