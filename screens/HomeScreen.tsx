@@ -1,48 +1,42 @@
 import { View } from "react-native";
 import { Button } from "react-native-paper"
 import HabitsList from "../components/HabitsList";
-import { SetStateAction, useState } from "react";
+import { useState } from "react";
 import NewHabitModal from "../components/NewHabitModal";
+import EditHabitModal from "../components/EditHabitModal";
+import { Habit, HabitSetter, HabitListSetter, HabitChanges } from "../types";
 
-interface HabitType {
-    id: number
-    name: string
-    description: string
-    completed: boolean
-}
 interface HabitsListProps {
-    habits: HabitType[];
-    setHabits: (value: SetStateAction<HabitType[]>) => void
-  }
-
-interface ButtonProps {
-    icon: string
-    mode: string
-    onPress: () => void
-}
-
-interface NewHabitModalProps {
-    visible: boolean
-    onClose: () => void
+    habits: Habit[];
+    setHabits: HabitListSetter
 }
 
 function HomeScreen ({habits, setHabits}:HabitsListProps){
+    const blankHabit: Habit = {id: 0, name: "", description: "", category: "", occurence: [], completed: false}
+    const [habitToEdit, setHabitToEdit]: [Habit, HabitSetter] = useState(blankHabit)
+    const [showCreate, setShowCreate] = useState(false)
+    const [showEdit, setShowEdit] = useState(false)
 
-    const [show, setShow] = useState(false)
+    const handlePress = () => setShowCreate(true)
+    const openEdit = () => setShowEdit(true)
+    const closeCreate = () => setShowCreate(false)
+    const closeEdit = () => setShowEdit(false)
 
-    const handlePress = () => {
-        setShow(true)
+    function editHabit(newHabit: HabitChanges) {
+        // do API stuff here
+    
+        setHabits(habits => {
+          Object.assign(habitToEdit, newHabit)
+          return habits
+        })
       }
-
-    const closeModal = () => {
-        setShow(false)
-    }
     
     return (
         <View>
-            <HabitsList habits={habits} setHabits={setHabits}/>
+            <HabitsList habits={habits} setHabits={setHabits} setHabitToEdit={setHabitToEdit} openEdit={openEdit}/>
             <Button icon ="plus" mode="contained" onPress={handlePress}>Create New Habit</Button>
-            <NewHabitModal visible = {show} onClose = {closeModal} setHabits = {setHabits}/>
+            <NewHabitModal visible={showCreate} onClose={closeCreate} setHabits={setHabits}/>
+            <EditHabitModal visible={showEdit} onClose={closeEdit} habit={habitToEdit} editHabit={editHabit}/>
         </View>
     )
 }
