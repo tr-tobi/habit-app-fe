@@ -6,25 +6,38 @@ import NavHeader from "./components/NavHeader";
 import HomeScreen from "./screens/HomeScreen";
 import SignUpPage from "./screens/SignUpPage";
 import CalendarHabitScreen from "./screens/CalendarHabitScreen";
+import { Habit, HabitListSetter } from "./types";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [habits, setHabits] = useState([
+  const testDataHabits: Habit[] = [
     {
       id: 1,
       name: "Exercise",
       description: "20 minutes of movement",
+      category: "Activity",
+      occurence: ["Monday", "Wednesday", "Friday"],
       completed: false,
     },
-    { id: 2, name: "Read", description: "minimum 3 pages", completed: false },
+    { 
+      id: 2, 
+      name: "Read", 
+      description: "minimum 3 pages", 
+      category: "Education",
+      occurence: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      completed: false 
+    },
     {
       id: 3,
       name: "Meditate",
       description: "minimum 5 minutes",
+      category: "Relaxation",
+      occurence: ["Monday", "Tuesday", "Wednesday", "Thursday"],
       completed: false,
     },
-  ]);
+  ]
+  const [habits, setHabits]: [Habit[], HabitListSetter] = useState(testDataHabits);
 
   return (
     <NavigationContainer>
