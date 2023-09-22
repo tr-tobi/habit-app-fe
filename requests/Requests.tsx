@@ -28,12 +28,3 @@ export const postSignUp = (
 export const postSignIn = (username: string, password: string) => {
   return axios.post("/api/auth/:username", { username, password });
 };
-
-export const getUsers = (): User[] => {
-  return [
-    { username: "Bill", email: "tony@gmail.com" },
-    { username: "Jabrony", email: "bill@gmail.com" },
-    { username: "Dom", email: "george@gmail.com" },
-  ];
-  // return axios.get(``);
-};

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
-import { User, getUsers, postSignUp } from "../requests/Requests";
+import { User, postSignUp } from "../requests/Requests";
 import { hashPassword } from "../utils/hashPassword";
 
 interface SignUpFormProps {
@@ -16,14 +16,9 @@ function SignupForm({ setIsLoggedIn, setCurrentUser }: SignUpFormProps) {
   const isDuplicateUserName = users?.some((user) => user.username === username);
   const isDuplicateEmail = users?.some((user) => user.email === email);
 
-  useEffect(() => {
-    const res = getUsers();
-    setUsers(res);
-  }, []);
-
   const handleSignup = async () => {
     setIsLoggedIn(true);
-    setCurrentUser(username);
+    setCurrentUser(username)
     // postSignUp(username, email, await hashPassword(password))
     //   .then(() => {
     //     setIsLoggedIn(true);
