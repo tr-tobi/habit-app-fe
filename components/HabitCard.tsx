@@ -2,6 +2,7 @@ import {useState, Dispatch, SetStateAction} from "react";
 import { View } from "react-native";
 import { List, Checkbox, Button } from "react-native-paper";
 import { Habit, HabitListSetter, HabitSetter, HabitCompletedType, HabitCompletionSetter } from "../types";
+import DeleteHabitDialog from "./DeleteHabitDialog";
 
 interface HabitCardProps {
   habit: Habit;
@@ -16,6 +17,7 @@ interface HabitCardProps {
 
 function HabitCard({ habit, setHabits, habitCompletionData, setHabitCompletionData, setHabitToEdit, showEdit, setShowEdit, openEdit }: HabitCardProps) {
   const [longPressed, setLongPressed] = useState(false)
+  const [showDelete, setShowDelete] = useState(false)
   
   const handleHabitCompletion = (id: number) => {
     const today = new Date().toISOString().split('T')[0];
@@ -58,6 +60,17 @@ function HabitCard({ habit, setHabits, habitCompletionData, setHabitCompletionDa
     openEdit()
   }
 
+  function deleteHabit() {
+    // do API stuff here
+    setHabits(currState => {
+      return currState.filter(element => element !== habit)
+    })
+  }
+
+  function hideDialog() {
+    setShowDelete(false)
+  }
+
   return (
     <View style={{flexDirection: "row", alignItems: "center"}}>
       <List.Item
@@ -74,8 +87,12 @@ function HabitCard({ habit, setHabits, habitCompletionData, setHabitCompletionDa
             />
         )}
       />
-      {showEdit && <Button onPress={openEditor}>Edit</Button>}
-      
+      {
+        showEdit && <>
+        <Button onPress={openEditor}>Edit</Button>
+        <Button onPress={() => setShowDelete(true)} labelStyle={{color: "red"}}>Delete</Button>
+        </>}
+      <DeleteHabitDialog visible={showDelete} hideDialog={hideDialog} deleteHabit={deleteHabit}/>
     </View>
   );
 }
