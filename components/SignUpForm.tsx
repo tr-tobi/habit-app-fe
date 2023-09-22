@@ -22,16 +22,16 @@ function SignupForm({ onSignup, checkUniqueUsername }: SignupFormProps) {
           "Please choose a different username."
         );
       } else {
-        const response = await postSignUp(username, email, password);
+        // const response = await postSignUp(username, email, password);
 
-        if (response.data.success) {
-          onSignup(username, email, password);
-        } else {
-          Alert.alert(
-            "Error signing up",
-            "An error occurred during sign-up. Please try again."
-          );
-        }
+        // if (response.data.success) {
+        //   onSignup(username, email, password);
+        // } else {
+        //   Alert.alert(
+        //     "Error signing up",
+        //     "An error occurred during sign-up. Please try again."
+        //   );
+        // }
       }
     } catch (error) {
       console.error("Error signing up:", error);
