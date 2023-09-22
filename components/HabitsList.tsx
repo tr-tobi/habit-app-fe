@@ -7,15 +7,23 @@ interface HabitType {
     description: string
     completed: boolean
 }
+
+interface HabitCompletedType {
+    id: number
+    date: string
+    completed: boolean
+}
 interface HabitsListProps {
     habits: HabitType[];
     setHabits: (value: SetStateAction<HabitType[]>) => void
+    habitCompletionData: HabitCompletedType[]
+    setHabitCompletionData: (value: SetStateAction<HabitCompletedType[]>) => void
   }
 
-function HabitsList({habits, setHabits}: HabitsListProps) {
+function HabitsList({habits, setHabits, habitCompletionData, setHabitCompletionData}: HabitsListProps) {
 
     return (
-        <HabitCard habits={habits} setHabits={setHabits}/>
+        <HabitCard habits={habits} setHabits={setHabits} habitCompletionData={habitCompletionData} setHabitCompletionData={setHabitCompletionData}/>
     )
 }
 
