@@ -18,3 +18,11 @@ export interface HabitChanges {
     category: string
     occurence: string[]
 }
+
+export interface HabitCompletedType {
+    id: number
+    date: string
+    completed: boolean
+}
+
+export type HabitCompletionSetter = Dispatch<SetStateAction<HabitCompletedType[]>>

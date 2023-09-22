@@ -4,32 +4,14 @@ import HabitsList from "../components/HabitsList";
 import { useState } from "react";
 import NewHabitModal from "../components/NewHabitModal";
 import EditHabitModal from "../components/EditHabitModal";
-import { Habit, HabitSetter, HabitListSetter, HabitChanges } from "../types";
-
-
-interface HabitCompletedType {
-    id: number
-    date: string
-    completed: boolean
-}
+import { Habit, HabitSetter, HabitListSetter, HabitChanges, HabitCompletedType, HabitCompletionSetter } from "../types";
 
 interface HabitsListProps {
     habits: Habit[]
     setHabits: HabitListSetter
     habitCompletionData: HabitCompletedType[]
-    setHabitCompletionData: (value: SetStateAction<HabitCompletedType[]>) => void
+    setHabitCompletionData: HabitCompletionSetter
   }
-
-interface ButtonProps {
-    icon: string
-    mode: string
-    onPress: () => void
-}
-
-interface NewHabitModalProps {
-    visible: boolean
-    onClose: () => void
-}
 
 function HomeScreen ({habits, setHabits, habitCompletionData, setHabitCompletionData}:HabitsListProps){
     const blankHabit: Habit = {id: 0, name: "", description: "", category: "", occurence: [], completed: false}

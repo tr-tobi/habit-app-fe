@@ -1,19 +1,13 @@
 import {useState, Dispatch, SetStateAction} from "react";
 import { View } from "react-native";
 import { List, Checkbox, Button } from "react-native-paper";
-import { Habit, HabitListSetter, HabitSetter } from "../types";
-
-interface HabitCompletedType {
-  id: number
-  date: string
-  completed: boolean
-}
+import { Habit, HabitListSetter, HabitSetter, HabitCompletedType, HabitCompletionSetter } from "../types";
 
 interface HabitCardProps {
   habit: Habit;
   setHabits: HabitListSetter;
   habitCompletionData: HabitCompletedType[]
-  setHabitCompletionData: (value: SetStateAction<HabitCompletedType[]>) => void
+  setHabitCompletionData: HabitCompletionSetter
   setHabitToEdit: HabitSetter
   showEdit: boolean;
   setShowEdit: Dispatch<SetStateAction<boolean>>;
@@ -37,7 +31,6 @@ function HabitCard({ habit, setHabits, habitCompletionData, setHabitCompletionDa
     } else {
       setHabitCompletionData((prevData) => [...prevData, { id: id, date:today, completed:true}])
     }
-    // console.log(habitCompletionData, "<<<<<<<<")
   }
 
   const handleCheckboxPress = () => {
