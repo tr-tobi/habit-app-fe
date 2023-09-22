@@ -1,19 +1,15 @@
 import { View } from "react-native";
 import { Button } from "react-native-paper"
 import HabitsList from "../components/HabitsList";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import NewHabitModal from "../components/NewHabitModal";
 import EditHabitModal from "../components/EditHabitModal";
-import { Habit, HabitSetter, HabitListSetter, HabitChanges, HabitCompletedType, HabitCompletionSetter } from "../types";
+import { Habit, HabitSetter, HabitChanges, HabitsContextType } from "../types";
+import { HabitsContext } from "../contexts/Habits";
 
-interface HabitsListProps {
-    habits: Habit[]
-    setHabits: HabitListSetter
-    habitCompletionData: HabitCompletedType[]
-    setHabitCompletionData: HabitCompletionSetter
-  }
+function HomeScreen (){
+    const { setHabits } = useContext(HabitsContext) as HabitsContextType;
 
-function HomeScreen ({habits, setHabits, habitCompletionData, setHabitCompletionData}:HabitsListProps){
     const blankHabit: Habit = {id: 0, name: "", description: "", category: "", occurence: [], completed: false}
     const [habitToEdit, setHabitToEdit]: [Habit, HabitSetter] = useState(blankHabit)
     const [showCreate, setShowCreate] = useState(false)
@@ -35,9 +31,9 @@ function HomeScreen ({habits, setHabits, habitCompletionData, setHabitCompletion
     
     return (
         <View>
-            <HabitsList habits={habits} setHabits={setHabits} habitCompletionData={habitCompletionData} setHabitCompletionData={setHabitCompletionData} setHabitToEdit={setHabitToEdit} openEdit={openEdit}/>
+            <HabitsList setHabitToEdit={setHabitToEdit} openEdit={openEdit}/>
             <Button icon ="plus" mode="contained" onPress={handlePress}>Create New Habit</Button>
-            <NewHabitModal visible={showCreate} onClose={closeCreate} setHabits={setHabits} setHabitCompletionData={setHabitCompletionData}/>
+            <NewHabitModal visible={showCreate} onClose={closeCreate}/>
             <EditHabitModal visible={showEdit} onClose={closeEdit} habit={habitToEdit} editHabit={editHabit}/>
         </View>
     )

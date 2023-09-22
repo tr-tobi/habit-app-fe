@@ -26,3 +26,13 @@ export interface HabitCompletedType {
 }
 
 export type HabitCompletionSetter = Dispatch<SetStateAction<HabitCompletedType[]>>
+
+export type HabitsContextType = {
+    habits: Habit[],
+    setHabits: HabitListSetter
+}
+
+export type HabitCompletionContextType = {
+    habitCompletionData: HabitCompletedType[],
+    setHabitCompletionData: HabitCompletionSetter
+}
