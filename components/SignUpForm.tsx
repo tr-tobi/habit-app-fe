@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
-import { User, getUsers } from "../requests/Requests";
+import { User, getUsers, postSignUp } from "../requests/Requests";
 import { hashPassword } from "../utils/hashPassword";
 
-function SignupForm() {
+interface SignUpFormProps {
+  setIsLoggedIn: (value: boolean) => void;
+  setCurrentUser: (value: string) => void;
+}
+
+function SignupForm({ setIsLoggedIn, setCurrentUser }: SignUpFormProps) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -17,7 +22,14 @@ function SignupForm() {
   }, []);
 
   const handleSignup = async () => {
-    console.log({ username, email, password: await hashPassword(password) });
+    try {
+      postSignUp(username, email, await hashPassword(password));
+      setIsLoggedIn(true);
+      setCurrentUser(username);
+    } catch (error) {
+      console.log(error);
+      setIsLoggedIn(false);
+    }
   };
 
   return (
