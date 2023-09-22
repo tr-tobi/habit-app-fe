@@ -11,11 +11,13 @@ export default function SignUpPage() {
   const navigation: any = useNavigation();
 
   useEffect(() => {
-    console.log("Signing in with:", currentUser);
-    navigation.reset({
-      index: 0,
-      routes: [{ name: "Home" }],
-    });
+    if (isLoggedIn) {
+      console.log("Signing in with:", currentUser);
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "Home" }],
+      });
+    }
   }, [isLoggedIn, currentUser]);
 
   return (
