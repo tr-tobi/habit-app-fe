@@ -1,29 +1,22 @@
-import React, { SetStateAction } from "react";
-import { Text, View, FlatList } from "react-native";
-import { List, Checkbox } from "react-native-paper";
-
-interface HabitType {
-  id: number;
-  name: string;
-  description: string;
-  completed: boolean;
-}
-
-interface HabitCompletedType {
-  id: number
-  date: string
-  completed: boolean
-}
+import {useState, Dispatch, SetStateAction} from "react";
+import { View } from "react-native";
+import { List, Checkbox, Button } from "react-native-paper";
+import { Habit, HabitListSetter, HabitSetter, HabitCompletedType, HabitCompletionSetter } from "../types";
 
 interface HabitCardProps {
-  habits: HabitType[];
-  setHabits: React.Dispatch<React.SetStateAction<HabitType[]>>;
+  habit: Habit;
+  setHabits: HabitListSetter;
   habitCompletionData: HabitCompletedType[]
-  setHabitCompletionData: (value: SetStateAction<HabitCompletedType[]>) => void
+  setHabitCompletionData: HabitCompletionSetter
+  setHabitToEdit: HabitSetter
+  showEdit: boolean;
+  setShowEdit: Dispatch<SetStateAction<boolean>>;
+  openEdit: () => void
 }
 
-function HabitCard({ habits, setHabits, habitCompletionData, setHabitCompletionData}: HabitCardProps) {
-
+function HabitCard({ habit, setHabits, habitCompletionData, setHabitCompletionData, setHabitToEdit, showEdit, setShowEdit, openEdit }: HabitCardProps) {
+  const [longPressed, setLongPressed] = useState(false)
+  
   const handleHabitCompletion = (id: number) => {
     const today = new Date().toISOString().split('T')[0];
 
@@ -38,10 +31,10 @@ function HabitCard({ habits, setHabits, habitCompletionData, setHabitCompletionD
     } else {
       setHabitCompletionData((prevData) => [...prevData, { id: id, date:today, completed:true}])
     }
-    // console.log(habitCompletionData, "<<<<<<<<")
   }
 
-  const handleCheckboxPress = (id: number) => {
+  const handleCheckboxPress = () => {
+    const id = habit.id
     setHabits((prevHabits) =>
       prevHabits.map((habit) =>
         habit.id === id ? { ...habit, completed: !habit.completed } : habit
@@ -50,27 +43,40 @@ function HabitCard({ habits, setHabits, habitCompletionData, setHabitCompletionD
     handleHabitCompletion(id);
   };
 
+  function handleTouch() {
+    if (longPressed) return setLongPressed(false)
+    handleCheckboxPress()
+  }
+
+  function handleLongPress() {
+    setLongPressed(true)
+    setShowEdit(show => !show)
+  }
+
+  function openEditor() {
+    setHabitToEdit(habit)
+    openEdit()
+  }
+
   return (
-    <FlatList
-      data={habits}
-      keyExtractor={(item) => item.id.toString()}
-      renderItem={({ item }) => (
-        <List.Item
-          onPress={() => handleCheckboxPress(item.id)}
-          style={{ backgroundColor: item.completed ? "lightgreen" : "white" }}
-          title={item.name}
-          description={item.description}
-          left={(props) => <List.Icon {...props} icon="circle" />}
-          right={() => (
+    <View style={{flexDirection: "row", alignItems: "center"}}>
+      <List.Item
+      onTouchEnd={handleTouch}
+      onLongPress={handleLongPress}
+        style={{flex: 1, backgroundColor: habit.completed ? "lightgreen" : "white" }}
+        title={habit.name}
+        description={habit.description}
+        left={(props) => <List.Icon {...props} icon="circle" />}
+        right={() => (
             <Checkbox
-              status={item.completed ? "checked" : "unchecked"}
-              onPress={() => handleCheckboxPress(item.id)}
-              color="green"
+            status={habit.completed ? "checked" : "unchecked"}
+            color="green"
             />
-          )}
-        />
-      )}
-    />
+        )}
+      />
+      {showEdit && <Button onPress={openEditor}>Edit</Button>}
+      
+    </View>
   );
 }
 

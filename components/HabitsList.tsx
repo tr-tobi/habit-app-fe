@@ -1,29 +1,28 @@
-import React, { SetStateAction, useState } from "react";
+import { useState } from "react";
+import { FlatList } from "react-native";
 import HabitCard from "./HabitCard";
+import { Habit, HabitListSetter, HabitSetter, HabitCompletedType, HabitCompletionSetter } from "../types";
 
-interface HabitType {
-    id: number
-    name: string
-    description: string
-    completed: boolean
-}
-
-interface HabitCompletedType {
-    id: number
-    date: string
-    completed: boolean
-}
 interface HabitsListProps {
-    habits: HabitType[];
-    setHabits: (value: SetStateAction<HabitType[]>) => void
+    habits: Habit[];
+    setHabits: HabitListSetter
+    setHabitToEdit: HabitSetter
+    openEdit: () => void
     habitCompletionData: HabitCompletedType[]
-    setHabitCompletionData: (value: SetStateAction<HabitCompletedType[]>) => void
-  }
+    setHabitCompletionData: HabitCompletionSetter
+}
 
-function HabitsList({habits, setHabits, habitCompletionData, setHabitCompletionData}: HabitsListProps) {
+function HabitsList({habits, setHabits, habitCompletionData, setHabitCompletionData, setHabitToEdit, openEdit}: HabitsListProps) {
+    const [showEdit, setShowEdit] = useState(false)
 
     return (
-        <HabitCard habits={habits} setHabits={setHabits} habitCompletionData={habitCompletionData} setHabitCompletionData={setHabitCompletionData}/>
+        <FlatList
+            data={habits}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+                <HabitCard habit={item} setHabits={setHabits} habitCompletionData={habitCompletionData} setHabitCompletionData={setHabitCompletionData} setHabitToEdit={setHabitToEdit} showEdit={showEdit} setShowEdit={setShowEdit} openEdit={openEdit}/>
+            )}
+        />
     )
 }
 
