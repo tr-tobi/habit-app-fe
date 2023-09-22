@@ -13,13 +13,15 @@ function SignInForm({ setIsLoggedIn, setCurrentUser }: SignInFormProps) {
   const [password, setPassword] = useState("");
 
   const handleSignIn = async () => {
-    try {
-      postSignIn(username, await hashPassword(password));
-      setIsLoggedIn(true);
-      setCurrentUser(username);
-    } catch (error) {
-      console.log(error);
-    }
+    postSignIn(username, await hashPassword(password))
+      .then(() => {
+        setIsLoggedIn(true);
+        setCurrentUser(username);
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsLoggedIn(false);
+      });
   };
 
   return (

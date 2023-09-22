@@ -22,14 +22,17 @@ function SignupForm({ setIsLoggedIn, setCurrentUser }: SignUpFormProps) {
   }, []);
 
   const handleSignup = async () => {
-    try {
-      postSignUp(username, email, await hashPassword(password));
-      setIsLoggedIn(true);
-      setCurrentUser(username);
-    } catch (error) {
-      console.log(error);
-      setIsLoggedIn(false);
-    }
+    setIsLoggedIn(true);
+    setCurrentUser(username);
+    // postSignUp(username, email, await hashPassword(password))
+    //   .then(() => {
+    //     setIsLoggedIn(true);
+    //     setCurrentUser(username);
+    //   })
+    //   .catch((error: any) => {
+    //     console.log(error);
+    //     setIsLoggedIn(false);
+    //   });
   };
 
   return (

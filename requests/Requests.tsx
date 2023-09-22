@@ -16,13 +16,13 @@ export const postSignUp = (
   password: string
 ) => {
   return (
-    axios.post("api/users"),
+    axios.post("api/users",
     {
       username,
       email,
       password,
     }
-  );
+  ));
 };
 
 export const postSignIn = (username: string, password: string) => {
