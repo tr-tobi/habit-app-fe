@@ -2,6 +2,7 @@ import { View } from "react-native";
 import { Button } from "react-native-paper"
 import HabitsList from "../components/HabitsList";
 import { SetStateAction, useState } from "react";
+import NewHabitModal from "../components/NewHabitModal";
 
 interface HabitType {
     id: number
@@ -50,7 +51,7 @@ function HomeScreen ({habits, setHabits, habitCompletionData, setHabitCompletion
         <View>
             <HabitsList habits={habits} setHabits={setHabits} habitCompletionData = {habitCompletionData} setHabitCompletionData = {setHabitCompletionData}/>
             <Button icon ="plus" mode="contained" onPress={handlePress}>Create New Habit</Button>
-            {/* <NewHabitModal visible = {show} onClose = {closeModal} setHabits = {setHabits}/> */}
+            <NewHabitModal visible = {show} onClose = {closeModal} setHabits = {setHabits}/>
         </View>
     )
 }

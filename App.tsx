@@ -6,9 +6,6 @@ import NavHeader from "./components/NavHeader";
 import HomeScreen from "./screens/HomeScreen";
 import SignUpPage from "./screens/SignUpPage";
 import CalendarHabitScreen from "./screens/CalendarHabitScreen";
-// import TestScreenA from './screens/TestScreenA';
-// import TestScreenB from "./screens/TestScreenB";
-// import TestScreenC from './screens/TestScreenC';
 
 interface HabitCompletedType {
   id: number
@@ -48,14 +45,12 @@ export default function App() {
     <NavigationContainer>
       <PaperProvider>
         <Stack.Navigator
-          initialRouteName=""
+          initialRouteName="SignUp/SignIn"
           screenOptions={{ header: NavHeader }}
         >
-          {/*initialRouteName=firstPage probably login or home, must match name in stack.screen definition*/}
-
           <Stack.Screen
             name="SignUp/SignIn"
-            options={{ title: "SignUp/SignIn" }}
+            options={{ title: "SignUp/SignIn", headerShown: false }}
           >
             {(props) => <SignUpPage />}
           </Stack.Screen>
@@ -82,19 +77,6 @@ export default function App() {
               {(props) => <CalendarHabitScreen habitCompletionData = {habitCompletionData} />}
             </Stack.Screen>
           }
-
-          {/*name is used by navigation buttons, title appears in the header, child funcion is the screen element*/}
-
-          {/* <Stack.Screen
-            name="TestScreenB"
-            options={{ title: "THIS IS TestScreenB" , gestureEnabled: false}}
-          >
-            {(props) => <TestScreenB />}
-          </Stack.Screen> */}
-
-          {/* <Stack.Screen name="TestScreenC" options={{title: "THIS IS TestScreenC"}}>
-          {(props) => <TestScreenC/>}
-          </Stack.Screen> */}
         </Stack.Navigator>
       </PaperProvider>
     </NavigationContainer>
