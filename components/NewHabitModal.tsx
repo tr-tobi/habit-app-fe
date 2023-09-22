@@ -1,14 +1,15 @@
 import { useState } from "react";
-import { HabitListSetter } from "../types";
+import { HabitListSetter, HabitCompletedType, HabitCompletionSetter } from "../types";
 import HabitModal from "./HabitModal";
 
 interface NewHabitProps {
     visible: boolean,
     onClose: () => void,
     setHabits: HabitListSetter
+    setHabitCompletionData: HabitCompletionSetter
 }
 
-export default function NewHabitModal({visible, onClose, setHabits}: NewHabitProps) {
+export default function NewHabitModal({visible, onClose, setHabits, setHabitCompletionData}: NewHabitProps) {
     const [name, setName] = useState("")
     const [category, setCategory] = useState("");
     const [days, setDays] = useState(new Array);
@@ -27,6 +28,7 @@ export default function NewHabitModal({visible, onClose, setHabits}: NewHabitPro
             const newHabit = {
                 id: prevState.length + 1,
                 name: name.trim(),
+                date: new Date().toISOString().split('T')[0],
                 description: description.trim(),
                 category: category,
                 occurence: sortedDays,
@@ -34,6 +36,19 @@ export default function NewHabitModal({visible, onClose, setHabits}: NewHabitPro
             }
 
             return [...prevState, newHabit]
+        })
+        //Do API post request here too i think
+        setHabitCompletionData(previousState => {
+            const newHabitCompletion = {
+                id: previousState.length + 1,
+                name: name.trim(),
+                date: new Date().toISOString().split('T')[0],
+                description: description.trim(),
+                category: category,
+                occurence: sortedDays,
+                completed: false
+            }
+            return [...previousState, newHabitCompletion]
         })
     }
 

@@ -37,7 +37,7 @@ function HomeScreen ({habits, setHabits, habitCompletionData, setHabitCompletion
         <View>
             <HabitsList habits={habits} setHabits={setHabits} habitCompletionData={habitCompletionData} setHabitCompletionData={setHabitCompletionData} setHabitToEdit={setHabitToEdit} openEdit={openEdit}/>
             <Button icon ="plus" mode="contained" onPress={handlePress}>Create New Habit</Button>
-            <NewHabitModal visible={showCreate} onClose={closeCreate} setHabits={setHabits}/>
+            <NewHabitModal visible={showCreate} onClose={closeCreate} setHabits={setHabits} setHabitCompletionData={setHabitCompletionData}/>
             <EditHabitModal visible={showEdit} onClose={closeEdit} habit={habitToEdit} editHabit={editHabit}/>
         </View>
     )
