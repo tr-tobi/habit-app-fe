@@ -1,21 +1,10 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import HabitCalendar from "../components/HabitCalendar";
 
-interface HabitCompletedType {
-    id: number
-    date: string
-    completed: boolean
-}
-
-interface HabitCalendarProps {
-    habitCompletionData: HabitCompletedType[];
-    
-}
-
-export default function CalendarHabitScreen({habitCompletionData,}:HabitCalendarProps) {
+export default function CalendarHabitScreen() {
     return (
         <View>
-            <HabitCalendar habitCompletionData = {habitCompletionData}/>
+            <HabitCalendar/>
         </View>
     )
 }

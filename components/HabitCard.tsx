@@ -1,21 +1,22 @@
-import {useState, Dispatch, SetStateAction} from "react";
+import {useState, Dispatch, SetStateAction, useContext} from "react";
 import { View } from "react-native";
 import { List, Checkbox, Button } from "react-native-paper";
-import { Habit, HabitListSetter, HabitSetter, HabitCompletedType, HabitCompletionSetter } from "../types";
+import { Habit, HabitSetter, HabitsContextType, HabitCompletionContextType } from "../types";
+import { HabitsContext } from "../contexts/Habits";
 import DeleteHabitDialog from "./DeleteHabitDialog";
+import { HabitCompletionContext } from "../contexts/HabitCompletion";
 
 interface HabitCardProps {
   habit: Habit;
-  setHabits: HabitListSetter;
-  habitCompletionData: HabitCompletedType[]
-  setHabitCompletionData: HabitCompletionSetter
   setHabitToEdit: HabitSetter
   showEdit: boolean;
   setShowEdit: Dispatch<SetStateAction<boolean>>;
   openEdit: () => void
 }
 
-function HabitCard({ habit, setHabits, habitCompletionData, setHabitCompletionData, setHabitToEdit, showEdit, setShowEdit, openEdit }: HabitCardProps) {
+function HabitCard({ habit, setHabitToEdit, showEdit, setShowEdit, openEdit }: HabitCardProps) {
+  const { setHabits } = useContext(HabitsContext) as HabitsContextType;
+  const { habitCompletionData, setHabitCompletionData } = useContext(HabitCompletionContext) as HabitCompletionContextType
   const [longPressed, setLongPressed] = useState(false)
   const [showDelete, setShowDelete] = useState(false)
   
