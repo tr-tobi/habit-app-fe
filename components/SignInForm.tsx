@@ -1,31 +1,25 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
+import { hashPassword } from "../utils/hashPassword";
 import { postSignIn } from "../requests/Requests";
 
 interface SignInFormProps {
-  onSignIn: (username: string) => void;
+  setIsLoggedIn: (value: boolean) => void;
+  setCurrentUser: (value: string) => void;
 }
 
-function SignInForm({ onSignIn }: SignInFormProps) {
+function SignInForm({ setIsLoggedIn, setCurrentUser }: SignInFormProps) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSignIn = async () => {
-    onSignIn(username);
-    // try {
-    //   const response = await postSignIn(username, password);
-
-    //   if (response.data.success) {
-    //     onSignIn(username);
-    //   } else {
-    //     Alert.alert(
-    //       "Invalid credentials",
-    //       "Please check your username and password."
-    //     );
-    //   }
-    // } catch (error) {
-    //   console.error("Error signing in:", error);
-    // }
+    try {
+      postSignIn(username, await hashPassword(password));
+      setIsLoggedIn(true);
+      setCurrentUser(username);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

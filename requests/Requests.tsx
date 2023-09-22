@@ -1,37 +1,39 @@
 import axios from "axios";
-import bcrypt from "bcrypt";
 
-export const postSignUp = async (
+export interface User {
+  username: string;
+  email: string;
+}
+
+export interface ApiError {
+  status: number;
+  message: string;
+}
+
+export const postSignUp = (
   username: string,
   email: string,
   password: string
-): Promise<any> => {
-
-  const saltRounds = 10; 
-  const hashedPassword = await bcrypt.hash(password, saltRounds);
-
-  return axios.post("https://your-backend-url.com/signup", {
-    username,
-    email,
-    password: hashedPassword, 
-  });
+) => {
+  return (
+    axios.post("api/users"),
+    {
+      username,
+      email,
+      password,
+    }
+  );
 };
 
-export const postSignIn = async (
-  username: string,
-  password: string
-): Promise<any> => {
-  const response = await axios.get(
-    `https://your-backend-url.com/users/${username}`
-  );
-  const hashedPasswordFromBackend = response.data.hashedPassword;
-  const passwordMatch = await bcrypt.compare(
-    password,
-    hashedPasswordFromBackend
-  );
-  if (passwordMatch) {
-    return { success: true };
-  } else {
-    return { success: false };
-  }
+export const postSignIn = (username: string, password: string) => {
+  return axios.post("/api/auth/:username", { username, password });
+};
+
+export const getUsers = (): User[] => {
+  return [
+    { username: "Bill", email: "tony@gmail.com" },
+    { username: "Jabrony", email: "bill@gmail.com" },
+    { username: "Dom", email: "george@gmail.com" },
+  ];
+  // return axios.get(``);
 };
