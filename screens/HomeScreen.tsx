@@ -6,12 +6,32 @@ import NewHabitModal from "../components/NewHabitModal";
 import EditHabitModal from "../components/EditHabitModal";
 import { Habit, HabitSetter, HabitListSetter, HabitChanges } from "../types";
 
-interface HabitsListProps {
-    habits: Habit[];
-    setHabits: HabitListSetter
+
+interface HabitCompletedType {
+    id: number
+    date: string
+    completed: boolean
 }
 
-function HomeScreen ({habits, setHabits}:HabitsListProps){
+interface HabitsListProps {
+    habits: Habit[]
+    setHabits: HabitListSetter
+    habitCompletionData: HabitCompletedType[]
+    setHabitCompletionData: (value: SetStateAction<HabitCompletedType[]>) => void
+  }
+
+interface ButtonProps {
+    icon: string
+    mode: string
+    onPress: () => void
+}
+
+interface NewHabitModalProps {
+    visible: boolean
+    onClose: () => void
+}
+
+function HomeScreen ({habits, setHabits, habitCompletionData, setHabitCompletionData}:HabitsListProps){
     const blankHabit: Habit = {id: 0, name: "", description: "", category: "", occurence: [], completed: false}
     const [habitToEdit, setHabitToEdit]: [Habit, HabitSetter] = useState(blankHabit)
     const [showCreate, setShowCreate] = useState(false)
@@ -33,7 +53,7 @@ function HomeScreen ({habits, setHabits}:HabitsListProps){
     
     return (
         <View>
-            <HabitsList habits={habits} setHabits={setHabits} setHabitToEdit={setHabitToEdit} openEdit={openEdit}/>
+            <HabitsList habits={habits} setHabits={setHabits} habitCompletionData={habitCompletionData} setHabitCompletionData={setHabitCompletionData} setHabitToEdit={setHabitToEdit} openEdit={openEdit}/>
             <Button icon ="plus" mode="contained" onPress={handlePress}>Create New Habit</Button>
             <NewHabitModal visible={showCreate} onClose={closeCreate} setHabits={setHabits}/>
             <EditHabitModal visible={showEdit} onClose={closeEdit} habit={habitToEdit} editHabit={editHabit}/>

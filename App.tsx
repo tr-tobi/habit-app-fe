@@ -1,5 +1,5 @@
 import { PaperProvider } from "react-native-paper";
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import NavHeader from "./components/NavHeader";
@@ -7,6 +7,17 @@ import HomeScreen from "./screens/HomeScreen";
 import SignUpPage from "./screens/SignUpPage";
 import CalendarHabitScreen from "./screens/CalendarHabitScreen";
 import { Habit, HabitListSetter } from "./types";
+
+interface HabitCompletedType {
+  id: number
+  date: string
+  completed: boolean
+}
+
+interface HabitCalendarProps {
+  habitCompletionData: HabitCompletedType[];
+  setHabitCompletionData: (value: SetStateAction<HabitCompletedType[]>) => void
+}
 
 const Stack = createNativeStackNavigator();
 
@@ -39,6 +50,10 @@ export default function App() {
   ]
   const [habits, setHabits]: [Habit[], HabitListSetter] = useState(testDataHabits);
 
+  const blankCompletionData:HabitCompletedType[] = []
+
+  const [habitCompletionData, setHabitCompletionData] = useState(blankCompletionData)
+
   return (
     <NavigationContainer>
       <PaperProvider>
@@ -61,7 +76,7 @@ export default function App() {
                 gestureEnabled: false,
               }}
             >
-              {(props) => <HomeScreen habits={habits} setHabits={setHabits} />}
+              {(props) => <HomeScreen habits={habits} setHabits={setHabits} habitCompletionData = {habitCompletionData} setHabitCompletionData = {setHabitCompletionData} />}
             </Stack.Screen>
           }
           {
@@ -72,7 +87,7 @@ export default function App() {
                 gestureEnabled: false,
               }}
             >
-              {(props) => <CalendarHabitScreen />}
+              {(props) => <CalendarHabitScreen habitCompletionData = {habitCompletionData} />}
             </Stack.Screen>
           }
         </Stack.Navigator>

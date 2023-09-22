@@ -12,23 +12,29 @@ function SignupForm({ onSignup, checkUniqueUsername }: SignupFormProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSignup = () => {
-    const isUnique = checkUniqueUsername(username);
+  const handleSignup = async () => {
+    try {
+      const isUnique = checkUniqueUsername(username);
 
-    if (!isUnique) {
-      Alert.alert(
-        "Username is not unique",
-        "Please choose a different username."
-      );
-    } else {
-      postSignUp(username, email, password)
-        .then((response) => {
-          console.log("Signup successful:", response.data);
+      if (!isUnique) {
+        Alert.alert(
+          "Username is not unique",
+          "Please choose a different username."
+        );
+      } else {
+        const response = await postSignUp(username, email, password);
+
+        if (response.data.success) {
           onSignup(username, email, password);
-        })
-        .catch((error) => {
-          console.error("Error signing up:", error);
-        });
+        } else {
+          Alert.alert(
+            "Error signing up",
+            "An error occurred during sign-up. Please try again."
+          );
+        }
+      }
+    } catch (error) {
+      console.error("Error signing up:", error);
     }
   };
 

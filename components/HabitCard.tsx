@@ -3,18 +3,43 @@ import { View } from "react-native";
 import { List, Checkbox, Button } from "react-native-paper";
 import { Habit, HabitListSetter, HabitSetter } from "../types";
 
+interface HabitCompletedType {
+  id: number
+  date: string
+  completed: boolean
+}
+
 interface HabitCardProps {
   habit: Habit;
   setHabits: HabitListSetter;
+  habitCompletionData: HabitCompletedType[]
+  setHabitCompletionData: (value: SetStateAction<HabitCompletedType[]>) => void
   setHabitToEdit: HabitSetter
   showEdit: boolean;
   setShowEdit: Dispatch<SetStateAction<boolean>>;
   openEdit: () => void
 }
 
-function HabitCard({ habit, setHabits, setHabitToEdit, showEdit, setShowEdit, openEdit }: HabitCardProps) {
+function HabitCard({ habit, setHabits, habitCompletionData, setHabitCompletionData, setHabitToEdit, showEdit, setShowEdit, openEdit }: HabitCardProps) {
   const [longPressed, setLongPressed] = useState(false)
   
+  const handleHabitCompletion = (id: number) => {
+    const today = new Date().toISOString().split('T')[0];
+
+    const existingEntryIndex = habitCompletionData.findIndex((entry) => entry.id === id && entry.date === today)
+
+    if(existingEntryIndex !== -1){
+      setHabitCompletionData((prevData) => {
+        const updatedData = [...prevData]
+        updatedData[existingEntryIndex].completed = !updatedData[existingEntryIndex].completed
+        return updatedData
+      })
+    } else {
+      setHabitCompletionData((prevData) => [...prevData, { id: id, date:today, completed:true}])
+    }
+    // console.log(habitCompletionData, "<<<<<<<<")
+  }
+
   const handleCheckboxPress = () => {
     const id = habit.id
     setHabits((prevHabits) =>
@@ -22,6 +47,7 @@ function HabitCard({ habit, setHabits, setHabitToEdit, showEdit, setShowEdit, op
         habit.id === id ? { ...habit, completed: !habit.completed } : habit
       )
     );
+    handleHabitCompletion(id);
   };
 
   function handleTouch() {
