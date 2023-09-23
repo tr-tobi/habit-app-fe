@@ -16,39 +16,20 @@ export default function App() {
       <PaperProvider>
         <HabitsProvider>
           <HabitCompletionProvider>
-            <Stack.Navigator
-              initialRouteName="SignUp/SignIn"
-              screenOptions={{ header: NavHeader }}
-            >
-              <Stack.Screen
-                name="SignUp/SignIn"
-                options={{ title: "SignUp/SignIn", headerShown: false }}
-              >
+            <Stack.Navigator initialRouteName="SignUp/SignIn" screenOptions={{ header: NavHeader }}>
+              
+              <Stack.Screen name="SignUp/SignIn" options={{ title: "SignUp/SignIn", headerShown: false }}>
                 {(props) => <SignUpPage />}
               </Stack.Screen>
 
-              {
-                <Stack.Screen
-                  name="Home"
-                  options={{
-                    title: "Home",
-                    gestureEnabled: false,
-                  }}
-                >
-                  {(props) => <HomeScreen/>}
-                </Stack.Screen>
-              }
-              {
-                <Stack.Screen
-                  name="Calendar"
-                  options={{
-                    title: "Calendar",
-                    gestureEnabled: false,
-                  }}
-                >
-                  {(props) => <CalendarHabitScreen/>}
-                </Stack.Screen>
-              }
+              <Stack.Screen name="Home" options={{ title: "Home", gestureEnabled: false }}>
+                {(props) => <HomeScreen/>}
+              </Stack.Screen>
+              
+              <Stack.Screen name="Calendar" options={{ title: "Calendar", gestureEnabled: false }}>
+                {(props) => <CalendarHabitScreen/>}
+              </Stack.Screen>
+
             </Stack.Navigator>
           </HabitCompletionProvider>
         </HabitsProvider>
