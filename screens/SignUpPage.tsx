@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import Header from "../components/Header";
-import SignupForm from "../components/SignUpForm";
-import SignInForm from "../components/SignInForm";
+import { Header, SignupForm, SignInForm } from "../components";
 import { useNavigation } from "@react-navigation/native";
 
 export default function SignUpPage() {
