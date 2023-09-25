@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { View, Text, TextInput, StyleSheet } from "react-native";
 import { User, postSignUp } from "../requests/Requests";
 import { hashPassword } from "../utils/hashPassword";
+import { Button } from "react-native-paper";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 interface SignUpFormProps {
   setIsLoggedIn: (value: boolean) => void;
@@ -12,21 +14,21 @@ function SignupForm({ setIsLoggedIn, setCurrentUser }: SignUpFormProps) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [users, setUsers] = useState<User[]>();
-  const isDuplicateUserName = users?.some((user) => user.username === username);
-  const isDuplicateEmail = users?.some((user) => user.email === email);
+  const [error, setError] = useState(false);
 
   const handleSignup = async () => {
     setIsLoggedIn(true);
-    setCurrentUser(username)
+    setCurrentUser(username);
     // postSignUp(username, email, await hashPassword(password))
     //   .then(() => {
     //     setIsLoggedIn(true);
     //     setCurrentUser(username);
+    //     setError(false);
     //   })
     //   .catch((error: any) => {
     //     console.log(error);
     //     setIsLoggedIn(false);
+    //     setError(true);
     //   });
   };
 
@@ -39,7 +41,8 @@ function SignupForm({ setIsLoggedIn, setCurrentUser }: SignUpFormProps) {
         value={username}
         placeholder="Enter your username"
       />
-      {isDuplicateUserName && (
+
+      {error && (
         <Text style={{ color: "red" }}>
           The username you've entered already exists
         </Text>
@@ -55,12 +58,6 @@ function SignupForm({ setIsLoggedIn, setCurrentUser }: SignUpFormProps) {
         autoCapitalize="none"
       />
 
-      {isDuplicateEmail && (
-        <Text style={{ color: "red" }}>
-          The email you've entered already exists
-        </Text>
-      )}
-
       <Text style={styles.label}>Password:</Text>
       <TextInput
         style={styles.input}
@@ -70,25 +67,34 @@ function SignupForm({ setIsLoggedIn, setCurrentUser }: SignUpFormProps) {
         secureTextEntry
       />
 
-      <Button title="Sign Up" onPress={handleSignup} />
+      <Button
+        mode="contained"
+        onPress={handleSignup}
+        buttonColor="#90a955"
+        textColor="white"
+      >
+        Sign Up
+      </Button>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    padding: 30,
   },
   label: {
     fontSize: 18,
-    marginBottom: 5,
+    marginBottom: 2,
+    color: "#E5DCC5",
   },
   input: {
     borderWidth: 1,
-    borderColor: "gray",
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 10,
+    borderColor: "black",
+    borderRadius: 15,
+    padding: 15,
+    marginBottom: 8,
+    backgroundColor: "#D9D9D9",
   },
 });
 

@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
+import { View, Text, TextInput, StyleSheet, Alert } from "react-native";
 import { hashPassword } from "../utils/hashPassword";
 import { postSignIn } from "../requests/Requests";
+import { Button } from "react-native-paper";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 interface SignInFormProps {
   setIsLoggedIn: (value: boolean) => void;
@@ -25,26 +27,41 @@ function SignInForm({ setIsLoggedIn, setCurrentUser }: SignInFormProps) {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.label}>Username:</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={setUsername}
-        value={username}
-        placeholder="Enter your username"
-      />
+    // <KeyboardAwareScrollView
+    //   style={{ flex: 1 }}
+    //   contentContainerStyle={styles.container}
+    //   onKeyboardWillShow={(frames: Object) => {
+    //     console.log("Keyboard event", frames);
+    // //   }}
+    // >
+      <View style={styles.container}>
+        <Text style={styles.label}>Username:</Text>
+        <TextInput
+          style={styles.input}
+          onChangeText={setUsername}
+          value={username}
+          placeholder="Enter your username"
+        />
 
-      <Text style={styles.label}>Password:</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={setPassword}
-        value={password}
-        placeholder="Enter your password"
-        secureTextEntry
-      />
+        <Text style={styles.label}>Password:</Text>
+        <TextInput
+          style={styles.input}
+          onChangeText={setPassword}
+          value={password}
+          placeholder="Enter your password"
+          secureTextEntry
+        />
 
-      <Button title="Sign In" onPress={handleSignIn} />
-    </View>
+        <Button
+          mode="contained"
+          onPress={handleSignIn}
+          buttonColor="#90a955"
+          textColor="white"
+        >
+          Sign In
+        </Button>
+      </View>
+    // </KeyboardAwareScrollView>
   );
 }
 
@@ -55,13 +72,15 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 18,
     marginBottom: 5,
+    color: "#E5DCC5",
   },
   input: {
     borderWidth: 1,
-    borderColor: "gray",
+    borderColor: "black",
     borderRadius: 5,
     padding: 10,
     marginBottom: 10,
+    backgroundColor: "#D9D9D9",
   },
 });
 

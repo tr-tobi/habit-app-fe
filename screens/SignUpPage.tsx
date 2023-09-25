@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import SignupForm from "../components/SignUpForm";
 import SignInForm from "../components/SignInForm";
 import { useNavigation } from "@react-navigation/native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function SignUpPage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -21,26 +22,39 @@ export default function SignUpPage() {
   }, [isLoggedIn, currentUser]);
 
   return (
-    <View style={styles.container}>
-      <Header title="Habit Tracker!" />
-      <Text>Create an Account!</Text>
-      <SignupForm
-        setIsLoggedIn={setIsLoggedIn}
-        setCurrentUser={setCurrentUser}
-      />
-      <Text>Sign In!</Text>
-      <SignInForm
-        setIsLoggedIn={setIsLoggedIn}
-        setCurrentUser={setCurrentUser}
-      />
-    </View>
+    <KeyboardAwareScrollView
+      style={{ flex: 1 }}
+      contentContainerStyle={styles.container}
+      onKeyboardWillShow={(frames: Object) => {
+        console.log("Keyboard event", frames);
+      }}
+    >
+      <View style={styles.container}>
+        <Header title="Habitual!" />
+        <Text style={styles.text}>Create an Account!</Text>
+        <SignupForm
+          setIsLoggedIn={setIsLoggedIn}
+          setCurrentUser={setCurrentUser}
+        />
+        <Text style={styles.text}>Sign In!</Text>
+        <SignInForm
+          setIsLoggedIn={setIsLoggedIn}
+          setCurrentUser={setCurrentUser}
+        />
+      </View>
+    </KeyboardAwareScrollView>
   );
 }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#6A7DA0",
     alignItems: "center",
     justifyContent: "center",
+  },
+  text: {
+    color: "#E5DCC5",
+    fontSize: 20,
+    padding: 0.5,
   },
 });
