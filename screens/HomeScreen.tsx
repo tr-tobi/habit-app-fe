@@ -26,6 +26,7 @@ function HomeScreen (){
           return habits
         })
       }
+
     
     return (
         <View>
