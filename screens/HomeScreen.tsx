@@ -1,9 +1,7 @@
 import { View } from "react-native";
 import { Button } from "react-native-paper"
-import HabitsList from "../components/HabitsList";
+import { HabitsList, NewHabitModal, EditHabitModal } from "../components";
 import { useState, useContext } from "react";
-import NewHabitModal from "../components/NewHabitModal";
-import EditHabitModal from "../components/EditHabitModal";
 import { Habit, HabitSetter, HabitChanges, HabitsContextType } from "../types";
 import { HabitsContext } from "../contexts/Habits";
 
