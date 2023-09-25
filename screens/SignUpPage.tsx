@@ -5,10 +5,12 @@ import SignupForm from "../components/SignUpForm";
 import SignInForm from "../components/SignInForm";
 import { useNavigation } from "@react-navigation/native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { Button as PaperButton } from "react-native-paper";
 
 export default function SignUpPage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState("");
+  const [showSignUp, setShowSignUp] = useState(false);
   const navigation: any = useNavigation();
 
   useEffect(() => {
@@ -21,6 +23,14 @@ export default function SignUpPage() {
     }
   }, [isLoggedIn, currentUser]);
 
+  const toggleSignUp = () => {
+    setShowSignUp(!showSignUp);
+  };
+
+  const goBackToSignIn = () => {
+    setShowSignUp(false);
+  };
+
   return (
     <KeyboardAwareScrollView
       style={{ flex: 1 }}
@@ -29,18 +39,31 @@ export default function SignUpPage() {
         console.log("Keyboard event", frames);
       }}
     >
+      <Header title="Habitual!" />
       <View style={styles.container}>
-        <Header title="Habitual!" />
-        <Text style={styles.text}>Create an Account!</Text>
-        <SignupForm
-          setIsLoggedIn={setIsLoggedIn}
-          setCurrentUser={setCurrentUser}
-        />
-        <Text style={styles.text}>Sign In!</Text>
-        <SignInForm
-          setIsLoggedIn={setIsLoggedIn}
-          setCurrentUser={setCurrentUser}
-        />
+        {!showSignUp ? (
+          <>
+            <Text style={styles.text}>Sign In!</Text>
+            <SignInForm
+              setIsLoggedIn={setIsLoggedIn}
+              setCurrentUser={setCurrentUser}
+            />
+            <PaperButton mode="contained" onPress={toggleSignUp}>
+              Create an account!
+            </PaperButton>
+          </>
+        ) : (
+          <>
+            <Text style={styles.text}>Create an Account!</Text>
+            <SignupForm
+              setIsLoggedIn={setIsLoggedIn}
+              setCurrentUser={setCurrentUser}
+            />
+            <PaperButton mode="contained" onPress={goBackToSignIn}>
+              Go back to Sign In
+            </PaperButton>
+          </>
+        )}
       </View>
     </KeyboardAwareScrollView>
   );

@@ -27,13 +27,6 @@ function SignInForm({ setIsLoggedIn, setCurrentUser }: SignInFormProps) {
   };
 
   return (
-    // <KeyboardAwareScrollView
-    //   style={{ flex: 1 }}
-    //   contentContainerStyle={styles.container}
-    //   onKeyboardWillShow={(frames: Object) => {
-    //     console.log("Keyboard event", frames);
-    // //   }}
-    // >
       <View style={styles.container}>
         <Text style={styles.label}>Username:</Text>
         <TextInput
@@ -61,7 +54,6 @@ function SignInForm({ setIsLoggedIn, setCurrentUser }: SignInFormProps) {
           Sign In
         </Button>
       </View>
-    // </KeyboardAwareScrollView>
   );
 }
 
@@ -77,10 +69,11 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 1,
     borderColor: "black",
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 10,
+    borderRadius: 15,
+    padding: 15,
+    marginBottom: 8,
     backgroundColor: "#D9D9D9",
+    width: 250
   },
 });
 
