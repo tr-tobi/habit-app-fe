@@ -1,5 +1,5 @@
-export { default as CategoryPicker } from "./modal-components/CategoryPicker";
-export { default as DayPicker } from "./modal-components/DayPicker";
+export { default as CategoryPicker } from "./CategoryPicker";
+export { default as DayPicker } from "./DayPicker";
 export { default as DeleteHabitDialog } from "./DeleteHabitDialog";
 export { default as EditHabitModal } from "./EditHabitModal";
 export { default as ErrorBar } from "./ErrorBar";
