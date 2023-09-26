@@ -1,38 +1,27 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet, Image } from "react-native";
 
-interface Headerprop {
-  title: string;
-}
-
-function Header({ title }: Headerprop) {
+function Header() {
   return (
     <View style={styles.header}>
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.slogan}>Where habits are conquered</Text>
+      <Image
+        source={require('../habitual__2_-removebg-preview.png')}
+        style={styles.image}
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   header: {
-    fontColor: "#393E41",
     width: "100%",
-    padding: 85,
-    paddingBottom: 110,
-    paddingTop: 120,
+    alignItems: "center",
+    padding: 100,
+    paddingBottom:1,
   },
-  title: {
-    textAlign: "center",
-    color: "#393E41",
-    fontSize: 55,
-    fontWeight: "bold",
-  },
-  slogan: {
-    textAlign: "center",
-    color: "#393E41",
-    fontSize: 15,
-    fontWeight: "bold",
+  image: {
+    width: 300, 
+    height: 300,
   },
 });
 

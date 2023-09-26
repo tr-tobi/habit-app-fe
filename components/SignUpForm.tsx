@@ -48,17 +48,18 @@ function SignupForm({ setIsLoggedIn, setCurrentUser }: SignUpFormProps) {
       setEmailValid(false);
       return;
     }
-
-    postSignUp(username, email, await hashPassword(password))
-      .then(() => {
-        setIsLoggedIn(true);
-        setCurrentUser(username);
-      })
-      .catch((error: any) => {
-        console.log(error);
-        setIsLoggedIn(false);
-        setError(error.message);
-      });
+    setIsLoggedIn(true);
+    setCurrentUser(username);
+    // postSignUp(username, email, await hashPassword(password))
+    //   .then(() => {
+    //     setIsLoggedIn(true);
+    //     setCurrentUser(username);
+    //   })
+    //   .catch((error: any) => {
+    //     console.log(error);
+    //     setIsLoggedIn(false);
+    //     setError(error.message);
+    //   });
   };
 
   return (
@@ -111,7 +112,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 18,
     marginBottom: 2,
-    color: "Black",
+    color: "#000000",
   },
   input: {
     borderWidth: 1,

@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: "black",
+    borderColor: "black",
   },
 });
 

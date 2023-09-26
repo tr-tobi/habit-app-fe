@@ -28,10 +28,6 @@ export default function SignUpPage() {
     setShowSignUp(!showSignUp);
   };
 
-  const goBackToSignIn = () => {
-    setShowSignUp(false);
-  };
-
   return (
     <KeyboardAwareScrollView
       style={{ flex: 1 }}
@@ -40,11 +36,10 @@ export default function SignUpPage() {
         console.log("Keyboard event", frames);
       }}
     >
-      <Header title="Habitual!" />
+      <Header />
       <View style={styles.SUFcontainer}>
         {!showSignUp ? (
           <>
-            <Text style={styles.text}>Sign In!</Text>
             <SignInForm
               setIsLoggedIn={setIsLoggedIn}
               setCurrentUser={setCurrentUser}
@@ -59,14 +54,13 @@ export default function SignUpPage() {
           </>
         ) : (
           <>
-            <Text style={styles.text}>Create an Account!</Text>
             <SignupForm
               setIsLoggedIn={setIsLoggedIn}
               setCurrentUser={setCurrentUser}
             />
             <PaperButton
               mode="elevated"
-              onPress={goBackToSignIn}
+              onPress={toggleSignUp}
               style={styles.buttons}
             >
               <Text style={{ color: "white" }}>Go back to Sign In</Text>
