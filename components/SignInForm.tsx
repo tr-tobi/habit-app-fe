@@ -3,7 +3,6 @@ import { View, Text, TextInput, StyleSheet, Alert } from "react-native";
 import { hashPassword } from "../utils/hashPassword";
 import { postSignIn } from "../requests/Requests";
 import { Button } from "react-native-paper";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 interface SignInFormProps {
   setIsLoggedIn: (value: boolean) => void;
@@ -27,44 +26,39 @@ function SignInForm({ setIsLoggedIn, setCurrentUser }: SignInFormProps) {
   };
 
   return (
-      <View style={styles.container}>
-        <Text style={styles.label}>Username:</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={setUsername}
-          value={username}
-          placeholder="Enter your username"
-        />
+    <View style={styles.SIcontainer}>
+      <Text style={styles.label}>Username:</Text>
+      <TextInput
+        style={styles.input}
+        onChangeText={setUsername}
+        value={username}
+        placeholder="Enter your username"
+      />
 
-        <Text style={styles.label}>Password:</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={setPassword}
-          value={password}
-          placeholder="Enter your password"
-          secureTextEntry
-        />
+      <Text style={styles.label}>Password:</Text>
+      <TextInput
+        style={styles.input}
+        onChangeText={setPassword}
+        value={password}
+        placeholder="Enter your password"
+        secureTextEntry
+      />
 
-        <Button
-          mode="contained"
-          onPress={handleSignIn}
-          buttonColor="#90a955"
-          textColor="white"
-        >
-          Sign In
-        </Button>
-      </View>
+      <Button style={styles.button} mode="elevated" onPress={handleSignIn}>
+        <Text style={{ color: "white" }}>Sign In!</Text>
+      </Button>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  SIcontainer: {
     padding: 20,
   },
   label: {
     fontSize: 18,
     marginBottom: 5,
-    color: "#E5DCC5",
+    color: "black",
   },
   input: {
     borderWidth: 1,
@@ -73,7 +67,10 @@ const styles = StyleSheet.create({
     padding: 15,
     marginBottom: 8,
     backgroundColor: "#D9D9D9",
-    width: 250
+    width: 250,
+  },
+  button: {
+    backgroundColor: "black",
   },
 });
 

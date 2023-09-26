@@ -34,13 +34,13 @@ export default function SignUpPage() {
   return (
     <KeyboardAwareScrollView
       style={{ flex: 1 }}
-      contentContainerStyle={styles.container}
+      contentContainerStyle={styles.SUFcontainer}
       onKeyboardWillShow={(frames: Object) => {
         console.log("Keyboard event", frames);
       }}
     >
       <Header title="Habitual!" />
-      <View style={styles.container}>
+      <View style={styles.SUFcontainer}>
         {!showSignUp ? (
           <>
             <Text style={styles.text}>Sign In!</Text>
@@ -48,8 +48,12 @@ export default function SignUpPage() {
               setIsLoggedIn={setIsLoggedIn}
               setCurrentUser={setCurrentUser}
             />
-            <PaperButton mode="contained" onPress={toggleSignUp}>
-              Create an account!
+            <PaperButton
+              mode="elevated"
+              onPress={toggleSignUp}
+              style={styles.buttons}
+            >
+              <Text style={{ color: "white" }}>Create an account!</Text>
             </PaperButton>
           </>
         ) : (
@@ -59,8 +63,12 @@ export default function SignUpPage() {
               setIsLoggedIn={setIsLoggedIn}
               setCurrentUser={setCurrentUser}
             />
-            <PaperButton mode="contained" onPress={goBackToSignIn}>
-              Go back to Sign In
+            <PaperButton
+              mode="elevated"
+              onPress={goBackToSignIn}
+              style={styles.buttons}
+            >
+              <Text style={{ color: "white" }}>Go back to Sign In</Text>
             </PaperButton>
           </>
         )}
@@ -69,15 +77,18 @@ export default function SignUpPage() {
   );
 }
 const styles = StyleSheet.create({
-  container: {
+  SUFcontainer: {
     flex: 1,
-    backgroundColor: "#6A7DA0",
+    backgroundColor: "white",
     alignItems: "center",
-    justifyContent: "center",
+    padding: 12,
   },
   text: {
-    color: "#E5DCC5",
+    color: "black",
     fontSize: 20,
     padding: 0.5,
+  },
+  buttons: {
+    backgroundColor: "black",
   },
 });
