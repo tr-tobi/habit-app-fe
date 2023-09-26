@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
+import { View, Text, TextInput, StyleSheet, Alert } from "react-native";
 import { hashPassword } from "../utils/hashPassword";
 import { postSignIn } from "../requests/Requests";
+import { Button } from "react-native-paper";
 
 interface SignInFormProps {
   setIsLoggedIn: (value: boolean) => void;
@@ -25,7 +26,7 @@ function SignInForm({ setIsLoggedIn, setCurrentUser }: SignInFormProps) {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.SIcontainer}>
       <Text style={styles.label}>Username:</Text>
       <TextInput
         style={styles.input}
@@ -43,25 +44,34 @@ function SignInForm({ setIsLoggedIn, setCurrentUser }: SignInFormProps) {
         secureTextEntry
       />
 
-      <Button title="Sign In" onPress={handleSignIn} />
+      <Button style={styles.button} mode="elevated" onPress={handleSignIn}>
+        <Text style={{ color: "white" }}>Sign In!</Text>
+      </Button>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  SIcontainer: {
     padding: 20,
   },
   label: {
     fontSize: 18,
     marginBottom: 5,
+    color: "black",
   },
   input: {
     borderWidth: 1,
-    borderColor: "gray",
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 10,
+    borderColor: "black",
+    borderRadius: 15,
+    padding: 15,
+    marginBottom: 8,
+    backgroundColor: "#D9D9D9",
+    width: 250,
+  },
+  button: {
+    backgroundColor: "black",
+    borderColor: "black",
   },
 });
 

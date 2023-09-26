@@ -2,10 +2,14 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Header, SignupForm, SignInForm } from "../components";
 import { useNavigation } from "@react-navigation/native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { Button as PaperButton } from "react-native-paper";
+import { useUserContext } from "../contexts/UserContext";
 
 export default function SignUpPage() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [currentUser, setCurrentUser] = useState("");
+  const { isLoggedIn, currentUser, setIsLoggedIn, setCurrentUser } =
+    useUserContext();
+  const [showSignUp, setShowSignUp] = useState(false);
   const navigation: any = useNavigation();
 
   useEffect(() => {
@@ -18,27 +22,67 @@ export default function SignUpPage() {
     }
   }, [isLoggedIn, currentUser]);
 
+  const toggleSignUp = () => {
+    setShowSignUp(!showSignUp);
+  };
+
   return (
-    <View style={styles.container}>
-      <Header title="Habit Tracker!" />
-      <Text>Create an Account!</Text>
-      <SignupForm
-        setIsLoggedIn={setIsLoggedIn}
-        setCurrentUser={setCurrentUser}
-      />
-      <Text>Sign In!</Text>
-      <SignInForm
-        setIsLoggedIn={setIsLoggedIn}
-        setCurrentUser={setCurrentUser}
-      />
-    </View>
+    <KeyboardAwareScrollView
+      style={{ flex: 1 }}
+      contentContainerStyle={styles.SUFcontainer}
+      onKeyboardWillShow={(frames: Object) => {
+        console.log("Keyboard event", frames);
+      }}
+    >
+      <Header />
+      <View style={styles.SUFcontainer}>
+        {!showSignUp ? (
+          <>
+            <SignInForm
+              setIsLoggedIn={setIsLoggedIn}
+              setCurrentUser={setCurrentUser}
+            />
+            <PaperButton
+              mode="elevated"
+              onPress={toggleSignUp}
+              style={styles.buttons}
+            >
+              <Text style={{ color: "white" }}>Create an account!</Text>
+            </PaperButton>
+          </>
+        ) : (
+          <>
+            <SignupForm
+              setIsLoggedIn={setIsLoggedIn}
+              setCurrentUser={setCurrentUser}
+            />
+            <PaperButton
+              mode="elevated"
+              onPress={toggleSignUp}
+              style={styles.buttons}
+            >
+              <Text style={{ color: "white" }}>Go back to Sign In</Text>
+            </PaperButton>
+          </>
+        )}
+      </View>
+    </KeyboardAwareScrollView>
   );
 }
+
 const styles = StyleSheet.create({
-  container: {
+  SUFcontainer: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "white",
     alignItems: "center",
-    justifyContent: "center",
+    padding: 12,
+  },
+  text: {
+    color: "black",
+    fontSize: 20,
+    padding: 0.5,
+  },
+  buttons: {
+    backgroundColor: "black",
   },
 });

@@ -1,29 +1,27 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet, Image } from "react-native";
 
-interface Headerprop {
-  title: string;
-}
-
-function Header({ title }: Headerprop) {
+function Header() {
   return (
     <View style={styles.header}>
-      <Text style={styles.title}>{title}</Text>
+      <Image
+        source={require('../habitual__2_-removebg-preview.png')}
+        style={styles.image}
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   header: {
-    height: 60,
-    padding: 15,
-    backgroundColor: "darkslateblue",
+    width: "100%",
+    alignItems: "center",
+    padding: 100,
+    paddingBottom:1,
   },
-  title: {
-    textAlign: "center",
-    color: "#fff",
-    fontSize: 23,
-    fontWeight: "bold",
+  image: {
+    width: 300, 
+    height: 300,
   },
 });
 

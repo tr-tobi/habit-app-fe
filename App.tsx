@@ -5,11 +5,13 @@ import NavHeader from "./components/NavHeader";
 import { HomeScreen, SignUpPage, CalendarHabitScreen } from "./screens";
 import { HabitsProvider } from "./contexts/Habits";
 import { HabitCompletionProvider } from "./contexts/HabitCompletion";
+import { UserProvider } from "./contexts/UserContext";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
+    <UserProvider>
     <NavigationContainer>
       <PaperProvider>
         <HabitsProvider>
@@ -33,5 +35,6 @@ export default function App() {
         </HabitsProvider>
       </PaperProvider>
     </NavigationContainer>
+    </UserProvider>
   );
 }
