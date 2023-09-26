@@ -17,11 +17,13 @@ const styles = StyleSheet.create({
 })
 
 interface CategoryPickerProps {
-    selectValue: string,
-    setSelectValue: Dispatch<SetStateAction<string>>
+    category: string
+    setCategory: Dispatch<SetStateAction<string>>
+    categories: {label: string, value: string}[]
+    setCategories: Dispatch<SetStateAction<{label: string, value: string}[]>>
 }
 
-export default function CategoryPicker({selectValue, setSelectValue}: CategoryPickerProps) {
+export default function CategoryPicker({category, setCategory, categories, setCategories}: CategoryPickerProps) {
     const [errorText, setErrorText] = useState("")
     const errorStates = {errorText, setErrorText}
     const [selectOpen, setSelectOpen] = useState(false);
@@ -36,8 +38,8 @@ export default function CategoryPicker({selectValue, setSelectValue}: CategoryPi
 
     function deleteCategory() {
         // do API stuff here
-        setCategories(categories.filter((category => category.value !== selectValue)))
-        setSelectValue("")
+        setCategories(categories.filter((categoryObj => categoryObj.value !== category)))
+        setCategory("")
     }
 
     function createCategory(value: string) {
@@ -52,16 +54,11 @@ export default function CategoryPicker({selectValue, setSelectValue}: CategoryPi
             currState.push({label: value, value: value})
             return currState
         })
-        setSelectValue(value)
+        setCategory(value)
         return true
     }
 
-    const [categories, setCategories] = useState([
-        {label: "Create a category", value: ''},
-        {label: 'Activity', value: 'Activity'},
-        {label: 'Education', value: 'Education'},
-        {label: 'Relaxation', value: 'Relaxation'},
-    ]);
+    
 
     return (
         <>
@@ -69,12 +66,12 @@ export default function CategoryPicker({selectValue, setSelectValue}: CategoryPi
                 <View style={{maxWidth: "70%"}}>
                 <DropDownPicker 
                     open={selectOpen} setOpen={setSelectOpen} 
-                    value={selectValue} setValue={setSelectValue} 
+                    value={category} setValue={setCategory} 
                     items={categories} setItems={setCategories}
                 />
                 </View>
                 {
-                    selectValue === "" ? 
+                    category === "" ? 
                         <Button mode="elevated" onPress={createPressed} 
                             labelStyle={styles.green} 
                             style={{justifyContent: "center"}}

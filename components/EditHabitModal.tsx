@@ -1,17 +1,22 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { Habit, HabitChanges } from "../types";
 import HabitModal from "./HabitModal";
 
 interface NewHabitProps {
-    visible: boolean,
-    onClose: () => void,
-    habit: Habit,
+    visible: boolean
+    onClose: () => void
+    habit: Habit
     editHabit: (newHabit: HabitChanges) => void
+    categoriesStates: {
+        categories: {label: string, value: string}[],
+        setCategories: Dispatch<SetStateAction<{label: string, value: string}[]>>
+    }
 }
 
-export default function EditHabitModal({visible, onClose, habit, editHabit}: NewHabitProps) {
+export default function EditHabitModal({visible, onClose, habit, editHabit, categoriesStates}: NewHabitProps) {
     const [name, setName] = useState("")
     const [category, setCategory] = useState("");
+    const {categories, setCategories} = categoriesStates
     const [days, setDays] = useState(new Array);
     const [description, setDescription] = useState("")
     const [errorText, setErrorText] = useState("")
@@ -41,7 +46,7 @@ export default function EditHabitModal({visible, onClose, habit, editHabit}: New
     }
 
     const labels = {title: "Edit Habit", button: "Submit Changes"}
-    const formStates = {name, setName, category, setCategory, days, setDays, description, setDescription}
+    const formStates = {name, setName, category, setCategory, categories, setCategories, days, setDays, description, setDescription}
     const errorStates = {errorText, setErrorText}
 
     return (

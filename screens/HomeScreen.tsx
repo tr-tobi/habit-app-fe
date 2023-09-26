@@ -27,13 +27,21 @@ function HomeScreen (){
         })
       }
 
+    const [categories, setCategories] = useState([
+      {label: "Create a category", value: ''},
+      {label: 'Activity', value: 'Activity'},
+      {label: 'Education', value: 'Education'},
+      {label: 'Relaxation', value: 'Relaxation'},
+    ]);
+
+    const categoriesStates = {categories, setCategories}
     
     return (
         <View>
             <HabitsList setHabitToEdit={setHabitToEdit} openEdit={openEdit}/>
             <Button icon ="plus" mode="contained" onPress={handlePress}>Create New Habit</Button>
-            <NewHabitModal visible={showCreate} onClose={closeCreate}/>
-            <EditHabitModal visible={showEdit} onClose={closeEdit} habit={habitToEdit} editHabit={editHabit}/>
+            <NewHabitModal visible={showCreate} onClose={closeCreate} categoriesStates={categoriesStates}/>
+            <EditHabitModal visible={showEdit} onClose={closeEdit} habit={habitToEdit} editHabit={editHabit} categoriesStates={categoriesStates}/>
         </View>
     )
 }
