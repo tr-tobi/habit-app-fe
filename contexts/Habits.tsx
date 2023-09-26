@@ -8,19 +8,19 @@ export const HabitsProvider = ({ children }: {children: ReactNode}) => {
     {
       id: 1, name: "Exercise", description: "20 minutes of movement",
       category: "Activity",
-      occurence: ["Monday", "Wednesday", "Friday"],
+      occurrence: ["Monday", "Wednesday", "Friday"],
       completed: false,
     },
     { 
       id: 2, name: "Read", description: "minimum 3 pages", 
       category: "Education",
-      occurence: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      occurrence: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
       completed: false 
     },
     {
       id: 3, name: "Meditate", description: "minimum 5 minutes",
       category: "Relaxation",
-      occurence: ["Monday", "Tuesday", "Wednesday", "Thursday"],
+      occurrence: ["Monday", "Tuesday", "Wednesday", "Thursday"],
       completed: false,
     },
   ]
