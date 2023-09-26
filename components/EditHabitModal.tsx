@@ -24,7 +24,7 @@ export default function EditHabitModal({visible, onClose, habit, editHabit, cate
     useEffect(() => {
         setName(habit.name)
         setCategory(habit.category)
-        setDays(habit.occurence)
+        setDays(habit.occurrence)
         setDescription(habit.description)
     }, [habit])
 
@@ -39,7 +39,7 @@ export default function EditHabitModal({visible, onClose, habit, editHabit, cate
             name: name.trim(),
             description: description.trim(),
             category: category,
-            occurence: sortedDays,
+            occurrence: sortedDays,
         }   
 
         editHabit(newHabit)

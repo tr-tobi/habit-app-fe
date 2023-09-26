@@ -8,7 +8,7 @@ import { HabitsContext } from "../contexts/Habits";
 function HomeScreen (){
     const { setHabits } = useContext(HabitsContext) as HabitsContextType;
 
-    const blankHabit: Habit = {id: 0, name: "", description: "", category: "", occurence: [], completed: false}
+    const blankHabit: Habit = {id: 0, name: "", description: "", category: "", occurrence: [], completed: false}
     const [habitToEdit, setHabitToEdit]: [Habit, HabitSetter] = useState(blankHabit)
     const [showCreate, setShowCreate] = useState(false)
     const [showEdit, setShowEdit] = useState(false)

@@ -17,7 +17,7 @@ function HabitsList({setHabitToEdit, openEdit}: HabitsListProps) {
 
 
     const filteredHabits = showTodayOnly
-    ? habits.filter((habit) => habit.occurence.includes(new Intl.DateTimeFormat("en-US", { weekday: "long"}).format(new Date()))) 
+    ? habits.filter((habit) => habit.occurrence.includes(new Intl.DateTimeFormat("en-US", { weekday: "long"}).format(new Date()))) 
     : habits;
 
     return (

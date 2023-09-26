@@ -5,7 +5,7 @@ export interface Habit {
     name: string
     description: string
     category: string
-    occurence: string[]
+    occurrence: string[]
     completed: boolean
 }
 
@@ -16,7 +16,7 @@ export interface HabitChanges {
     name: string
     description: string
     category: string
-    occurence: string[]
+    occurrence: string[]
 }
 
 export interface HabitCompletedType {
