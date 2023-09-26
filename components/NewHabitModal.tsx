@@ -68,6 +68,10 @@ export default function NewHabitModal({visible, onClose, categoriesStates}: NewH
                 })
             }
         })
+        .catch((err) => {
+            console.log(err);
+            // handle error
+        })
     }
 
     function handleDismiss() {
