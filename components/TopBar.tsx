@@ -1,6 +1,5 @@
 import { SetStateAction } from 'react';
 import { Appbar } from 'react-native-paper';
-import { useRoute } from '@react-navigation/native';
 
 interface TopBarProps {
     setShowNav: (value: SetStateAction<boolean>) => void,

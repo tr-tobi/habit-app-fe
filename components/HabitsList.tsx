@@ -1,28 +1,38 @@
-import { useState } from "react";
-import { FlatList } from "react-native";
+import { useState, useContext } from "react";
+import { FlatList, View } from "react-native";
 import HabitCard from "./HabitCard";
-import { Habit, HabitListSetter, HabitSetter, HabitCompletedType, HabitCompletionSetter } from "../types";
+import { HabitsContext } from "../contexts/Habits";
+import { HabitSetter, HabitsContextType } from "../types";
+import { Button } from "react-native-paper";
 
 interface HabitsListProps {
-    habits: Habit[];
-    setHabits: HabitListSetter
     setHabitToEdit: HabitSetter
     openEdit: () => void
-    habitCompletionData: HabitCompletedType[]
-    setHabitCompletionData: HabitCompletionSetter
 }
 
-function HabitsList({habits, setHabits, habitCompletionData, setHabitCompletionData, setHabitToEdit, openEdit}: HabitsListProps) {
+function HabitsList({setHabitToEdit, openEdit}: HabitsListProps) {
+    const { habits } = useContext(HabitsContext) as HabitsContextType;
     const [showEdit, setShowEdit] = useState(false)
+    const [showTodayOnly, setShowTodayOnly] = useState(false)
+
+
+    const filteredHabits = showTodayOnly
+    ? habits.filter((habit) => habit.occurence.includes(new Intl.DateTimeFormat("en-US", { weekday: "long"}).format(new Date()))) 
+    : habits;
 
     return (
-        <FlatList
-            data={habits}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={({ item }) => (
-                <HabitCard habit={item} setHabits={setHabits} habitCompletionData={habitCompletionData} setHabitCompletionData={setHabitCompletionData} setHabitToEdit={setHabitToEdit} showEdit={showEdit} setShowEdit={setShowEdit} openEdit={openEdit}/>
-            )}
-        />
+        <View>
+            <Button onPress={() => setShowTodayOnly(!showTodayOnly)}>
+            {showTodayOnly ? "Show All Habits" : "Show Today's Habits"}
+          </Button>
+            <FlatList
+                data={filteredHabits}
+                keyExtractor={(item) => item.id.toString()}
+                renderItem={({ item }) => (
+                    <HabitCard habit={item} setHabitToEdit={setHabitToEdit} showEdit={showEdit} setShowEdit={setShowEdit} openEdit={openEdit}/>
+                )}
+            />
+        </View>
     )
 }
 

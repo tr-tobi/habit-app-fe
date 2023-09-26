@@ -1,4 +1,4 @@
-import { useState, SetStateAction, Dispatch } from 'react';
+import { SetStateAction, Dispatch } from 'react';
 import { Snackbar } from 'react-native-paper';
 
 interface ErrorBarProps {
