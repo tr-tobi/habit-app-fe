@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const HOST_URL = ""
+import {HOST_URL} from '@env'
 
 export interface User {
   username: string;
