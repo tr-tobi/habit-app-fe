@@ -1,5 +1,7 @@
 import axios from "axios";
 
+const HOST_URL = ""
+
 export interface User {
   username: string;
   email: string;
@@ -37,3 +39,15 @@ export const getUsers = (): User[] => {
   ];
   // return axios.get(``);
 };
+
+interface NewHabit {
+  habit_name: string
+  habit_category: string,
+  description: string,
+  occurrence: string[],
+}
+
+export const postHabit = (username: string, newHabit: NewHabit) => {
+  return axios.post(`${HOST_URL}/api/users/${username}/habits`, newHabit)
+    .then(({data}) => data.habit)
+}
