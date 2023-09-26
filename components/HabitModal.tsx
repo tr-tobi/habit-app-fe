@@ -27,6 +27,8 @@ interface HabitModalProps {
     formStates: {
         name: string, setName: Dispatch<SetStateAction<string>>, 
         category: string, setCategory: Dispatch<SetStateAction<string>>, 
+        categories: {label: string, value: string}[],
+        setCategories: Dispatch<SetStateAction<{label: string, value: string}[]>>,
         days: string[], setDays: Dispatch<SetStateAction<string[]>>, 
         description: string, setDescription: Dispatch<SetStateAction<string>>
     }
@@ -35,7 +37,7 @@ interface HabitModalProps {
 }
 
 export default function HabitModal({visible, labels, handleDismiss, formStates, submit, errorStates}: HabitModalProps) {
-    const {name, setName, category, setCategory, days, setDays, description, setDescription} = formStates
+    const {name, setName, category, setCategory, categories, setCategories, days, setDays, description, setDescription} = formStates
     const {errorText, setErrorText} = errorStates
 
     function handleOnPress() {
@@ -57,7 +59,7 @@ export default function HabitModal({visible, labels, handleDismiss, formStates, 
                 
                 <TextInput label="Habit" value={name} onChangeText={(text) => setName(text)} style={{minWidth: "80%", marginTop: 20}}/>
                 
-                <CategoryPicker selectValue={category} setSelectValue={setCategory}/>
+                <CategoryPicker category={category} setCategory={setCategory} categories={categories} setCategories={setCategories}/>
 
                 <DayPicker daysValue={days} setDaysValue={setDays}/>
 

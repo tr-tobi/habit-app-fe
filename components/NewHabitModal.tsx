@@ -1,19 +1,24 @@
-import { useContext, useState } from "react";
+import { useContext, useState, Dispatch, SetStateAction } from "react";
 import { HabitCompletionContextType, HabitsContextType } from "../types";
 import HabitModal from "./HabitModal";
 import { HabitsContext } from "../contexts/Habits";
 import { HabitCompletionContext } from "../contexts/HabitCompletion";
 
 interface NewHabitProps {
-    visible: boolean,
-    onClose: () => void,
+    visible: boolean
+    onClose: () => void
+    categoriesStates: {
+        categories: {label: string, value: string}[],
+        setCategories: Dispatch<SetStateAction<{label: string, value: string}[]>>
+    }
 }
 
-export default function NewHabitModal({visible, onClose}: NewHabitProps) {
+export default function NewHabitModal({visible, onClose, categoriesStates}: NewHabitProps) {
     const { habits, setHabits } = useContext(HabitsContext) as HabitsContextType;
     const { setHabitCompletionData } = useContext(HabitCompletionContext) as HabitCompletionContextType
     const [name, setName] = useState("")
     const [category, setCategory] = useState("");
+    const {categories, setCategories} = categoriesStates
     const [days, setDays] = useState(new Array);
     const [description, setDescription] = useState("")
     const [errorText, setErrorText] = useState("")
@@ -60,7 +65,7 @@ export default function NewHabitModal({visible, onClose}: NewHabitProps) {
     }
 
     const labels = {title: "Create Habit", button: "Submit Habit"}
-    const formStates = {name, setName, category, setCategory, days, setDays, description, setDescription}
+    const formStates = {name, setName, category, setCategory, categories, setCategories, days, setDays, description, setDescription}
     const errorStates = {errorText, setErrorText}
 
 
