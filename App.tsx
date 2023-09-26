@@ -7,16 +7,17 @@ import HomeScreen from "./screens/HomeScreen";
 import SignUpPage from "./screens/SignUpPage";
 import CalendarHabitScreen from "./screens/CalendarHabitScreen";
 import { Habit, HabitListSetter } from "./types";
+import { UserProvider } from "./contexts/UserContext";
 
 interface HabitCompletedType {
-  id: number
-  date: string
-  completed: boolean
+  id: number;
+  date: string;
+  completed: boolean;
 }
 
 interface HabitCalendarProps {
   habitCompletionData: HabitCompletedType[];
-  setHabitCompletionData: (value: SetStateAction<HabitCompletedType[]>) => void
+  setHabitCompletionData: (value: SetStateAction<HabitCompletedType[]>) => void;
 }
 
 const Stack = createNativeStackNavigator();
@@ -31,13 +32,13 @@ export default function App() {
       occurence: ["Monday", "Wednesday", "Friday"],
       completed: false,
     },
-    { 
-      id: 2, 
-      name: "Read", 
-      description: "minimum 3 pages", 
+    {
+      id: 2,
+      name: "Read",
+      description: "minimum 3 pages",
       category: "Education",
       occurence: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      completed: false 
+      completed: false,
     },
     {
       id: 3,
@@ -47,51 +48,66 @@ export default function App() {
       occurence: ["Monday", "Tuesday", "Wednesday", "Thursday"],
       completed: false,
     },
-  ]
-  const [habits, setHabits]: [Habit[], HabitListSetter] = useState(testDataHabits);
+  ];
+  const [habits, setHabits]: [Habit[], HabitListSetter] =
+    useState(testDataHabits);
 
-  const blankCompletionData:HabitCompletedType[] = []
+  const blankCompletionData: HabitCompletedType[] = [];
 
-  const [habitCompletionData, setHabitCompletionData] = useState(blankCompletionData)
+  const [habitCompletionData, setHabitCompletionData] =
+    useState(blankCompletionData);
 
   return (
-    <NavigationContainer>
-      <PaperProvider>
-        <Stack.Navigator
-          initialRouteName="SignUp/SignIn"
-          screenOptions={{ header: NavHeader }}
-        >
-          <Stack.Screen
-            name="SignUp/SignIn"
-            options={{ title: "SignUp/SignIn", headerShown: false }}
+    <UserProvider>
+      <NavigationContainer>
+        <PaperProvider>
+          <Stack.Navigator
+            initialRouteName="SignUp/SignIn"
+            screenOptions={{ header: NavHeader }}
           >
-            {(props) => <SignUpPage />}
-          </Stack.Screen>
+            <Stack.Screen
+              name="SignUp/SignIn"
+              options={{ title: "SignUp/SignIn", headerShown: false }}
+            >
+              {(props) => <SignUpPage />}
+            </Stack.Screen>
 
-          {
-            <Stack.Screen
-              name="Home"
-              options={{
-                title: "Home",
-                gestureEnabled: false,
-              }}
-            >
-              {(props) => <HomeScreen habits={habits} setHabits={setHabits} habitCompletionData = {habitCompletionData} setHabitCompletionData = {setHabitCompletionData} />}
-            </Stack.Screen>
-          }
-          {
-            <Stack.Screen
-              name="Calendar"
-              options={{
-                title: "Calendar",
-                gestureEnabled: false,
-              }}
-            >
-              {(props) => <CalendarHabitScreen habitCompletionData = {habitCompletionData} />}
-            </Stack.Screen>
-          }
-        </Stack.Navigator>
-      </PaperProvider>
-    </NavigationContainer>
+            {
+              <Stack.Screen
+                name="Home"
+                options={{
+                  title: "Home",
+                  gestureEnabled: false,
+                }}
+              >
+                {(props) => (
+                  <HomeScreen
+                    habits={habits}
+                    setHabits={setHabits}
+                    habitCompletionData={habitCompletionData}
+                    setHabitCompletionData={setHabitCompletionData}
+                  />
+                )}
+              </Stack.Screen>
+            }
+            {
+              <Stack.Screen
+                name="Calendar"
+                options={{
+                  title: "Calendar",
+                  gestureEnabled: false,
+                }}
+              >
+                {(props) => (
+                  <CalendarHabitScreen
+                    habitCompletionData={habitCompletionData}
+                  />
+                )}
+              </Stack.Screen>
+            }
+          </Stack.Navigator>
+        </PaperProvider>
+      </NavigationContainer>
+    </UserProvider>
   );
 }

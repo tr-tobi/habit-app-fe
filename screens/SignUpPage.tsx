@@ -6,10 +6,11 @@ import SignInForm from "../components/SignInForm";
 import { useNavigation } from "@react-navigation/native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Button as PaperButton } from "react-native-paper";
+import { useUserContext } from "../contexts/UserContext";
 
 export default function SignUpPage() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [currentUser, setCurrentUser] = useState("");
+  const { isLoggedIn, currentUser, setIsLoggedIn, setCurrentUser } =
+    useUserContext();
   const [showSignUp, setShowSignUp] = useState(false);
   const navigation: any = useNavigation();
 
@@ -76,6 +77,7 @@ export default function SignUpPage() {
     </KeyboardAwareScrollView>
   );
 }
+
 const styles = StyleSheet.create({
   SUFcontainer: {
     flex: 1,
