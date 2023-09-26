@@ -3,6 +3,7 @@ import { HabitCompletionContextType, HabitsContextType } from "../types";
 import HabitModal from "./HabitModal";
 import { HabitsContext } from "../contexts/Habits";
 import { HabitCompletionContext } from "../contexts/HabitCompletion";
+import { postHabit } from "../requests/Requests";
 
 interface NewHabitProps {
     visible: boolean
@@ -31,28 +32,41 @@ export default function NewHabitModal({visible, onClose, categoriesStates}: NewH
         }
         const sortedDays = [...days].sort((a: string, b:string) => dayOrder[a] - dayOrder[b])
 
-        // Do API post thing here and get the ID
-        
-        setHabits(prevState => {
-            const newHabit = {
-                id: prevState.length + 1,
-                name: name.trim(),
-                description: description.trim(),
-                category: category,
-                occurence: sortedDays,
-                completed: false
-            }
+        const newHabit = {
+            habit_name: name.trim(),
+            description: description.trim(),
+            habit_category: category,
+            occurrence: sortedDays,
+        }
 
-            return [...prevState, newHabit]
-        })
-        //Do API post request here too i think
-        setHabitCompletionData(previousState => {
-            const newHabitCompletion = {
-                id: previousState.length + 1,
-                date: new Date().toISOString().split('T')[0],
-                completed: false
+        const username = "" // use username context when finished
+        postHabit(username, newHabit)
+        .then(habit => {
+            setHabits(prevState => {
+                const newHabit = {
+                    id: habit.habit_id,
+                    name: habit.habit_name,
+                    description: habit.description,
+                    category: habit.category,
+                    occurrence: habit.occurrence,
+                    completed: false
+                }
+    
+                return [...prevState, newHabit]
+            })
+
+            const today = new Intl.DateTimeFormat("en-US", { weekday: "long"}).format(new Date())
+            if (sortedDays.includes(today)) {
+
+                setHabitCompletionData(previousState => {
+                    const newHabitCompletion = {
+                        id: habit.habit_id,
+                        date: new Date().toISOString().split('T')[0],
+                        completed: false
+                    }
+                    return [...previousState, newHabitCompletion]
+                })
             }
-            return [...previousState, newHabitCompletion]
         })
     }
 
