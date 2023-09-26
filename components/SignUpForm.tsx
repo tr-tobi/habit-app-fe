@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
-import { User, getUsers, postSignUp } from "../requests/Requests";
+import { View, Text, TextInput, StyleSheet } from "react-native";
+import { User, postSignUp } from "../requests/Requests";
 import { hashPassword } from "../utils/hashPassword";
+import { Button } from "react-native-paper";
 
 interface SignUpFormProps {
   setIsLoggedIn: (value: boolean) => void;
@@ -12,16 +13,41 @@ function SignupForm({ setIsLoggedIn, setCurrentUser }: SignUpFormProps) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [users, setUsers] = useState<User[]>();
-  const isDuplicateUserName = users?.some((user) => user.username === username);
-  const isDuplicateEmail = users?.some((user) => user.email === email);
+  const [isEmailValid, setEmailValid] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const res = getUsers();
-    setUsers(res);
-  }, []);
+  const isValidEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const handleEmailChange = (text: string) => {
+    setEmail(text);
+    setEmailValid(true);
+  };
 
   const handleSignup = async () => {
+    setError(null);
+
+    if (username.length < 6) {
+      setError("Must be at least 6 characters.");
+      return;
+    }
+
+    if (!/[A-Z]/.test(username)) {
+      setError("Must contain at least one capital letter.");
+      return;
+    }
+
+    if (!/\d/.test(username)) {
+      setError("Must contain at least one number.");
+      return;
+    }
+
+    if (!isValidEmail(email)) {
+      setEmailValid(false);
+      return;
+    }
     setIsLoggedIn(true);
     setCurrentUser(username);
     // postSignUp(username, email, await hashPassword(password))
@@ -32,11 +58,12 @@ function SignupForm({ setIsLoggedIn, setCurrentUser }: SignUpFormProps) {
     //   .catch((error: any) => {
     //     console.log(error);
     //     setIsLoggedIn(false);
+    //     setError(error.message);
     //   });
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.SUcontainer}>
       <Text style={styles.label}>Username:</Text>
       <TextInput
         style={styles.input}
@@ -44,25 +71,21 @@ function SignupForm({ setIsLoggedIn, setCurrentUser }: SignUpFormProps) {
         value={username}
         placeholder="Enter your username"
       />
-      {isDuplicateUserName && (
-        <Text style={{ color: "red" }}>
-          The username you've entered already exists
-        </Text>
-      )}
+
+      {error && <Text style={{ color: "red" }}>{error}</Text>}
 
       <Text style={styles.label}>Email:</Text>
       <TextInput
         style={styles.input}
-        onChangeText={setEmail}
+        onChangeText={handleEmailChange}
         value={email}
         placeholder="Enter your email"
         keyboardType="email-address"
         autoCapitalize="none"
       />
-
-      {isDuplicateEmail && (
+      {!isEmailValid && (
         <Text style={{ color: "red" }}>
-          The email you've entered already exists
+          Please enter a valid email address.
         </Text>
       )}
 
@@ -75,25 +98,33 @@ function SignupForm({ setIsLoggedIn, setCurrentUser }: SignUpFormProps) {
         secureTextEntry
       />
 
-      <Button title="Sign Up" onPress={handleSignup} />
+      <Button style={styles.button} mode="contained" onPress={handleSignup}>
+        <Text style={{ color: "white" }}>Sign Up!</Text>
+      </Button>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 20,
+  SUcontainer: {
+    padding: 30,
   },
   label: {
     fontSize: 18,
-    marginBottom: 5,
+    marginBottom: 2,
+    color: "#000000",
   },
   input: {
     borderWidth: 1,
-    borderColor: "gray",
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 10,
+    borderColor: "black",
+    borderRadius: 15,
+    padding: 15,
+    marginBottom: 8,
+    backgroundColor: "#D9D9D9",
+    width: 250,
+  },
+  button: {
+    backgroundColor: "black",
   },
 });
 
