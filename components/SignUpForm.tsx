@@ -48,18 +48,17 @@ function SignupForm({ setIsLoggedIn, setCurrentUser }: SignUpFormProps) {
       setEmailValid(false);
       return;
     }
-    setIsLoggedIn(true);
-    setCurrentUser(username);
-    // postSignUp(username, email, await hashPassword(password))
-    //   .then(() => {
-    //     setIsLoggedIn(true);
-    //     setCurrentUser(username);
-    //   })
-    //   .catch((error: any) => {
-    //     console.log(error);
-    //     setIsLoggedIn(false);
-    //     setError(error.message);
-    //   });
+
+    postSignUp(username, email, await hashPassword(password))
+      .then(() => {
+        setIsLoggedIn(true);
+        setCurrentUser(username);
+      })
+      .catch((error: any) => {
+        console.log(error);
+        setIsLoggedIn(false);
+        setError(error.message);
+      });
   };
 
   return (
