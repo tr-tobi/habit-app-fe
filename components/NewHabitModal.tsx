@@ -63,7 +63,7 @@ export default function NewHabitModal({visible, onClose, categoriesStates}: NewH
                     username: currentUser,
                     completed: false
                 }
-
+                console.log(currentUser, newHabitCompletion)
                 return postHabitCompletion(currentUser, newHabitCompletion)
                 .then(() => {
                     setHabitCompletionData(previousState => {
@@ -78,6 +78,7 @@ export default function NewHabitModal({visible, onClose, categoriesStates}: NewH
             }
         })
         .catch((err) => {
+            console.log(err)
             setErrorText("Failed to upload new habit")
         })
     }
