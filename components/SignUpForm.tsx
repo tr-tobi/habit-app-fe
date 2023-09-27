@@ -95,7 +95,9 @@ function SignupForm({ setIsLoggedIn, setCurrentUser }: SignUpFormProps) {
         placeholder="Enter your password"
         secureTextEntry
       />
-
+      {error && (
+        <Text style={{ color: "red" }}>Username or password already used</Text>
+      )}
       <Button style={styles.button} mode="contained" onPress={handleSignup}>
         <Text style={{ color: "white" }}>Sign Up!</Text>
       </Button>

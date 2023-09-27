@@ -12,16 +12,26 @@ interface SignInFormProps {
 function SignInForm({ setIsLoggedIn, setCurrentUser }: SignInFormProps) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  const [error, setError] = useState<string | null>(null);
   const handleSignIn = async () => {
+    setError(null);
     postSignIn(username, await hashPassword(password))
-      .then(() => {
-        setIsLoggedIn(true);
-        setCurrentUser(username);
+      .then(({ data }) => {
+        console.log(data.correct)
+        if (data.correct === true) {
+          console.log(data);
+          setIsLoggedIn(true);
+          setCurrentUser(username);
+        } else {
+          console.error("Invalid username/password");
+          setIsLoggedIn(false);
+          setError("Invalid username/password");
+        }
       })
       .catch((error) => {
         console.log(error);
         setIsLoggedIn(false);
+        setError(error.message);
       });
   };
 
@@ -43,6 +53,11 @@ function SignInForm({ setIsLoggedIn, setCurrentUser }: SignInFormProps) {
         placeholder="Enter your password"
         secureTextEntry
       />
+      {error && (
+        <Text style={{ color: "red", textAlign: "center", paddingBottom: 7 }}>
+          Invalid username/password
+        </Text>
+      )}
 
       <Button style={styles.button} mode="elevated" onPress={handleSignIn}>
         <Text style={{ color: "white" }}>Sign In!</Text>
