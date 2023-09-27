@@ -4,6 +4,7 @@ import HabitModal from "./HabitModal";
 import { HabitsContext } from "../contexts/Habits";
 import { HabitCompletionContext } from "../contexts/HabitCompletion";
 import { postHabit } from "../requests/Requests";
+import { useUserContext } from "../contexts/UserContext";
 
 interface NewHabitProps {
     visible: boolean
@@ -23,6 +24,7 @@ export default function NewHabitModal({visible, onClose, categoriesStates}: NewH
     const [days, setDays] = useState(new Array);
     const [description, setDescription] = useState("")
     const [errorText, setErrorText] = useState("")
+    const {currentUser} = useUserContext()
 
 
     function submitHabit() {
@@ -39,7 +41,7 @@ export default function NewHabitModal({visible, onClose, categoriesStates}: NewH
             occurrence: sortedDays,
         }
 
-        const username = "" // use username context when finished
+        const username = currentUser
         postHabit(username, newHabit)
         .then(habit => {
             setHabits(prevState => {
