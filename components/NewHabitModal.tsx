@@ -3,7 +3,7 @@ import { HabitCompletionContextType, HabitsContextType } from "../types";
 import HabitModal from "./HabitModal";
 import { HabitsContext } from "../contexts/Habits";
 import { HabitCompletionContext } from "../contexts/HabitCompletion";
-import { postHabit } from "../requests/Requests";
+import { postHabit, postHabitCompletion } from "../requests/Requests";
 import { useUserContext } from "../contexts/UserContext";
 
 interface NewHabitProps {
@@ -17,6 +17,7 @@ interface NewHabitProps {
 
 export default function NewHabitModal({visible, onClose, categoriesStates}: NewHabitProps) {
     const { habits, setHabits } = useContext(HabitsContext) as HabitsContextType;
+    const { currentUser } = useUserContext()
     const { setHabitCompletionData } = useContext(HabitCompletionContext) as HabitCompletionContextType
     const [name, setName] = useState("")
     const [category, setCategory] = useState("");
@@ -41,8 +42,7 @@ export default function NewHabitModal({visible, onClose, categoriesStates}: NewH
             occurrence: sortedDays,
         }
 
-        const username = currentUser
-        postHabit(username, newHabit)
+        postHabit(currentUser, newHabit)
         .then(habit => {
             setHabits(prevState => {
                 const newHabit = {
@@ -59,20 +59,28 @@ export default function NewHabitModal({visible, onClose, categoriesStates}: NewH
 
             const today = new Intl.DateTimeFormat("en-US", { weekday: "long"}).format(new Date())
             if (sortedDays.includes(today)) {
+                
+                const newHabitCompletion = {
+                    habit_id: habit.habit_id,
+                    username: currentUser,
+                    completed: false
+                }
 
-                setHabitCompletionData(previousState => {
-                    const newHabitCompletion = {
-                        id: habit.habit_id,
-                        date: new Date().toISOString().split('T')[0],
-                        completed: false
-                    }
-                    return [...previousState, newHabitCompletion]
+                return postHabitCompletion(currentUser, newHabitCompletion)
+                .then(() => {
+                    setHabitCompletionData(previousState => {
+                        const newHabitCompletion = {
+                            id: habit.habit_id,
+                            date: new Date().toISOString().split('T')[0],
+                            completed: false
+                        }
+                        return [...previousState, newHabitCompletion]
+                    })
                 })
             }
         })
         .catch((err) => {
-            console.log(err);
-            // handle error
+            setErrorText("Failed to upload new habit")
         })
     }
 
