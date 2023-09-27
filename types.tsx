@@ -13,6 +13,7 @@ export type HabitSetter = Dispatch<SetStateAction<Habit>>
 export type HabitListSetter = Dispatch<SetStateAction<Habit[]>>
 
 export interface HabitChanges {
+    id: string
     name: string
     description: string
     category: string
@@ -20,7 +21,7 @@ export interface HabitChanges {
 }
 
 export interface HabitCompletedType {
-    id: number
+    id: string
     date: string
     completed: boolean
 }

@@ -4,6 +4,8 @@ import { HabitsList, NewHabitModal, EditHabitModal } from "../components";
 import { useState, useContext } from "react";
 import { Habit, HabitSetter, HabitChanges, HabitsContextType } from "../types";
 import { HabitsContext } from "../contexts/Habits";
+import { patchHabit } from "../requests/Requests";
+import { useUserContext } from "../contexts/UserContext";
 
 function HomeScreen (){
     const { setHabits } = useContext(HabitsContext) as HabitsContextType;
@@ -17,14 +19,23 @@ function HomeScreen (){
     const openEdit = () => setShowEdit(true)
     const closeCreate = () => setShowCreate(false)
     const closeEdit = () => setShowEdit(false)
+    const {currentUser} = useUserContext()
 
     function editHabit(newHabit: HabitChanges) {
-        // do API stuff here
-    
+      const username = currentUser
+
+      const updatedHabit = {
+        habit_name: newHabit.name,
+        habit_category: newHabit.category,
+        description: newHabit.description,
+        occurence: newHabit.occurrence
+      }
+
         setHabits(habits => {
           Object.assign(habitToEdit, newHabit)
           return habits
         })
+        patchHabit(username, updatedHabit, newHabit.id)
       }
 
     const [categories, setCategories] = useState([

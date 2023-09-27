@@ -25,6 +25,7 @@ export default function NewHabitModal({visible, onClose, categoriesStates}: NewH
     const [days, setDays] = useState(new Array);
     const [description, setDescription] = useState("")
     const [errorText, setErrorText] = useState("")
+    const {currentUser} = useUserContext()
 
 
     function submitHabit() {

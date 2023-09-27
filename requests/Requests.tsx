@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import {HOST_URL} from '@env'
+import { HOST_URL } from "@env";
 
 export interface User {
   username: string;
@@ -18,7 +18,7 @@ export const postSignUp = (
   password: string
 ) => {
   return (
-    axios.post("api/users",
+    axios.post(`${HOST_URL}/api/users`,
     {
       username,
       email,
@@ -28,7 +28,7 @@ export const postSignUp = (
 };
 
 export const postSignIn = (username: string, password: string) => {
-  return axios.post("/api/auth/:username", { username, password });
+  return axios.post(`${HOST_URL}/api/auth/${username}`, { username, password });
 };
 
 interface NewHabit {
@@ -52,4 +52,16 @@ interface NewHabitCompletion {
 export const postHabitCompletion = (username: string, newHabitCompletion: NewHabitCompletion) => {
   return axios.post(`${HOST_URL}/api/users/${username}/habit_completion`, newHabitCompletion)
     .then(({data}) => data.habit)
+}
+
+interface UpdatedHabit {
+  
+  habit_name?: string
+  habit_category?: string
+  description?: string
+  occurence?: string[]
+
+}
+export const patchHabit = (username: string, updatedHabit: UpdatedHabit, id: string) => {
+  return axios.patch(`${HOST_URL}/api/users/${username}/habits/${id}`, updatedHabit)
 }
