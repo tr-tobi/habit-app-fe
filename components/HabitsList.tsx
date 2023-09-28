@@ -36,7 +36,7 @@ function HabitsList({setHabitToEdit, openEdit}: HabitsListProps) {
         .then((habits) => {
             console.log("Got current habits");
             
-            setHabits(habits.map(habit => {
+            const newHabits = habits.map(habit => {
                 return {
                     id: habit.habit_id,
                     name: habit.habit_name,
@@ -45,58 +45,66 @@ function HabitsList({setHabitToEdit, openEdit}: HabitsListProps) {
                     occurrence: habit.occurrence,
                     completed: false
                 }
-            })) 
+            })
+            setHabits(newHabits) 
 
-            // getHabitCompletion(currentUser, new Date().toISOString().split('T')[0])
-            // .catch((err) => {
-            //     if (err.response.status === 404) {
-            //         console.log("comp data empty");
-            //         return []
-            //     }
-            //     else {
-            //         console.log("Failed to get habit completion");
-            //         return []
-            //     }
-            // })
-            // .then((habitCompletion) => {
-            //     const todaysHabits = getTodaysHabits()
-            //     const newCompletions: Promise<AxiosResponse<any, any>>[] = []
-            //     todaysHabits.forEach(habit => {
-            //         if (!habitCompletion.find(element => element.habit_id === habit.id)) {
-            //             const newHabitCompletion = {
-            //                 habit_id: habit.id,
-            //                 username: currentUser,
-            //                 completed: false
-            //             }
-            //             newCompletions.push(postHabitCompletion(currentUser, newHabitCompletion))
-            //         }
-            //     })
-            //     return Promise.all(newCompletions)
-            // })
-            // .then(() => {
-            //     return getHabitCompletion(currentUser, new Date().toISOString().split('T')[0])
-            // })
-            // .then((habitCompletion) => {
-            //     setHabitCompletionData(habitCompletion.map((completion) => {
-            //         return {
-            //             id: completion.habit_id,
-            //             date: new Date().toISOString().split('T')[0],
-            //             completed: false,
-            //         }
-            //     }))
-            // })
+            getHabitCompletion(currentUser, new Date().toISOString().split('T')[0])
+            .catch((err) => {
+                if (err.response.status === 404) {
+                    console.log("comp data empty");
+                    return []
+                }
+                else {
+                    console.log("Failed to get habit completion");
+                    return []
+                }
+            })
+            .then((habitCompletion) => {
+                const todaysHabits = filterHabits(newHabits)
+                const newCompletions: Promise<AxiosResponse<any, any>>[] = []
+                
+                todaysHabits.forEach(habit => {
+                    if (!habitCompletion.find(element => element.habit_id === habit.id)) {
+                        console.log("posting new data");
+                        
+                        const newHabitCompletion = {
+                            habit_id: habit.id,
+                            username: currentUser,
+                            completed: false
+                        }
+                        newCompletions.push(postHabitCompletion(currentUser, newHabitCompletion))
+                    }
+                })
+                return Promise.all(newCompletions)
+            })
+            .then(() => {
+                return getHabitCompletion(currentUser, new Date().toISOString().split('T')[0])
+            })
+            .catch(() => {
+                console.log("No habit comp data, probably because no habits");
+                return []
+            })
+            .then((habitCompletion) => {
+                setHabitCompletionData(habitCompletion.map((completion) => {
+                    return {
+                        id: completion.habit_id,
+                        date: new Date().toISOString().split('T')[0],
+                        completed: false,
+                    }
+                }))
+            })
         })
         .catch((err) => {
             console.log(err)
         })
     }, [])
 
-    function getTodaysHabits() {
+    function filterHabits(habits: any[]) {
         return habits.filter((habit) => habit.occurrence.includes(new Intl.DateTimeFormat("en-US", { weekday: "long"}).format(new Date()))) 
     }
 
     const filteredHabits = showTodayOnly
-    ? getTodaysHabits()
+    ? filterHabits(habits)
     : habits;
 
     return (
