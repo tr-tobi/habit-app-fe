@@ -1,6 +1,5 @@
 import axios from "axios";
 
-
 import { HOST_URL } from "@env";
 
 export interface User {
@@ -37,12 +36,18 @@ interface NewHabit {
 }
 
 export const postHabit = (username: string, newHabit: NewHabit) => {
-  return axios.post(`${HOST_URL}/api/users/${username}/habits`, newHabit)
-    .then(({data}) => data.habit)
-}
+  return axios
+    .post(`${HOST_URL}/api/users/${username}/habits`, newHabit)
+    .then(({ data }) => data.habit);
+};
 
 interface NewHabitCompletion {
-  habit_id: string
+  habit_id: string;
+  username: string;
+  completed: boolean;
+}
+
+export const postHabitCompletion = (
   username: string,
   completed: boolean,
 }
@@ -52,12 +57,10 @@ export const postHabitCompletion = (username: string, newHabitCompletion: NewHab
 }
 
 interface UpdatedHabit {
-  
-  habit_name?: string
-  habit_category?: string
-  description?: string
-  occurence?: string[]
-
+  habit_name?: string;
+  habit_category?: string;
+  description?: string;
+  occurence?: string[];
 }
 export const patchHabit = (username: string, updatedHabit: UpdatedHabit, id: string) => {
   return axios.patch(`${HOST_URL}/api/users/${username}/habits/${id}`, updatedHabit)
@@ -86,3 +89,12 @@ export const getHabitCompletion = (username: string, date: string): Promise<Data
   return axios.get(`${HOST_URL}/api/users/${username}/habit_completion/${date}`)
     .then(({data}) => data.habit_completion)
 }
+
+export const createCategoryRequest = (
+  newCategory: string,
+  username: string
+) => {
+  return axios.post(`${HOST_URL}/api/categories/${username}`, {
+    newCategory,
+  });
+};
