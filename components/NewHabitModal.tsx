@@ -38,6 +38,7 @@ export default function NewHabitModal({visible, onClose, categoriesStates}: NewH
             description: description.trim(),
             habit_category: category,
             occurrence: sortedDays,
+            username: currentUser
         }
 
         postHabit(currentUser, newHabit)
@@ -63,7 +64,6 @@ export default function NewHabitModal({visible, onClose, categoriesStates}: NewH
                     username: currentUser,
                     completed: false
                 }
-                console.log(currentUser, newHabitCompletion)
                 return postHabitCompletion(currentUser, newHabitCompletion)
                 .then(() => {
                     setHabitCompletionData(previousState => {
