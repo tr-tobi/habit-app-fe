@@ -5,6 +5,8 @@ import { Habit, HabitSetter, HabitsContextType, HabitCompletionContextType } fro
 import { HabitsContext } from "../contexts/Habits";
 import DeleteHabitDialog from "./DeleteHabitDialog";
 import { HabitCompletionContext } from "../contexts/HabitCompletion";
+import { deleteHabitById } from "../requests/Requests";
+import { useUserContext } from "../contexts/UserContext";
 
 interface HabitCardProps {
   habit: Habit;
@@ -19,6 +21,7 @@ function HabitCard({ habit, setHabitToEdit, showEdit, setShowEdit, openEdit }: H
   const { habitCompletionData, setHabitCompletionData } = useContext(HabitCompletionContext) as HabitCompletionContextType
   const [longPressed, setLongPressed] = useState(false)
   const [showDelete, setShowDelete] = useState(false)
+  const {currentUser} = useUserContext()
   
   const handleHabitCompletion = (id: string) => {
     const today = new Date().toISOString().split('T')[0];
@@ -62,11 +65,18 @@ function HabitCard({ habit, setHabitToEdit, showEdit, setShowEdit, openEdit }: H
   }
 
   function deleteHabit() {
-    // do API stuff here
-    setHabits(currState => {
-      return currState.filter(element => element !== habit)
+    const username = currentUser
+    const id = habit.id
+
+    deleteHabitById(username, id)
+    .catch ((err) => {
+        console.log(err)
+        console.log('Failed to delete habit')
+      })
+      setHabits(currState => {
+        return currState.filter(element => element !== habit)
     })
-  }
+    }
 
   function hideDialog() {
     setShowDelete(false)
