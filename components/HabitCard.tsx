@@ -7,6 +7,7 @@ import DeleteHabitDialog from "./DeleteHabitDialog";
 import { HabitCompletionContext } from "../contexts/HabitCompletion";
 import { deleteHabitById } from "../requests/Requests";
 import { useUserContext } from "../contexts/UserContext";
+import { patchHabitCompletion } from "../requests/Requests";
 
 interface HabitCardProps {
   habit: Habit;
@@ -23,12 +24,24 @@ function HabitCard({ habit, setHabitToEdit, showEdit, setShowEdit, openEdit }: H
   const [showDelete, setShowDelete] = useState(false)
   const {currentUser} = useUserContext()
   
-  const handleHabitCompletion = (id: string) => {
+  const handleHabitCompletion = (id: string, newComplete: boolean) => {
     const today = new Date().toISOString().split('T')[0];
 
     const existingEntryIndex = habitCompletionData.findIndex((entry) => entry.id === id && entry.date === today)
 
     if(existingEntryIndex !== -1){
+
+      const newHabitCompletion = {
+        completed: newComplete,
+        habit_id: habit.id
+      }
+
+      patchHabitCompletion(currentUser, newHabitCompletion)
+      .catch((err) => {
+        console.log(err)
+        console.log('Can not patch habit completion')
+      })
+
       setHabitCompletionData((prevData) => {
         const updatedData = [...prevData]
         updatedData[existingEntryIndex].completed = !updatedData[existingEntryIndex].completed
@@ -41,12 +54,13 @@ function HabitCard({ habit, setHabitToEdit, showEdit, setShowEdit, openEdit }: H
 
   const handleCheckboxPress = () => {
     const id = habit.id
+    const newComplete = !habit.completed
     setHabits((prevHabits) =>
       prevHabits.map((habit) =>
         habit.id === id ? { ...habit, completed: !habit.completed } : habit
       )
     );
-    handleHabitCompletion(id);
+    handleHabitCompletion(id, newComplete);
   };
 
   function handleTouch() {
