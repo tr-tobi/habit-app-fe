@@ -49,7 +49,6 @@ interface NewHabitCompletion {
 
 export const postHabitCompletion = (username: string, newHabitCompletion: NewHabitCompletion) => {
   return axios.post(`${HOST_URL}/api/users/${username}/habit_completion`, newHabitCompletion)
-    .then(({data}) => data.habit)
 }
 
 interface UpdatedHabit {
@@ -62,4 +61,28 @@ interface UpdatedHabit {
 }
 export const patchHabit = (username: string, updatedHabit: UpdatedHabit, id: string) => {
   return axios.patch(`${HOST_URL}/api/users/${username}/habits/${id}`, updatedHabit)
+}
+
+interface DatabaseHabit {
+  habit_id: string
+  habit_name: string
+  habit_category: string
+  description: string
+  occurrence: string[]
+}
+
+export const getHabits = (username: string): Promise<DatabaseHabit[]> => {
+  return axios.get(`${HOST_URL}/api/habits/${username}`)
+    .then(({data}) => data.habits)
+}
+
+interface DatabaseHabitCompletion {
+  habit_id: string,
+	date: string,
+	completed: boolean,
+}
+
+export const getHabitCompletion = (username: string, date: string): Promise<DatabaseHabitCompletion[]> => {
+  return axios.get(`${HOST_URL}/api/users/${username}/habit_completion/${date}`)
+    .then(({data}) => data.habit_completion)
 }

@@ -20,7 +20,7 @@ function HabitCard({ habit, setHabitToEdit, showEdit, setShowEdit, openEdit }: H
   const [longPressed, setLongPressed] = useState(false)
   const [showDelete, setShowDelete] = useState(false)
   
-  const handleHabitCompletion = (id: number) => {
+  const handleHabitCompletion = (id: string) => {
     const today = new Date().toISOString().split('T')[0];
 
     const existingEntryIndex = habitCompletionData.findIndex((entry) => entry.id === id && entry.date === today)
