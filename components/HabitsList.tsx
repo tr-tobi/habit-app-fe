@@ -89,7 +89,7 @@ function HabitsList({setHabitToEdit, openEdit}: HabitsListProps) {
                     return {
                         id: completion.habit_id,
                         date: new Date().toISOString().split('T')[0],
-                        completed: false,
+                        completed: completion.completed,
                     }
                 }))
                 setHabits(currState => {
