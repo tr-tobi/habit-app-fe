@@ -72,6 +72,17 @@ interface DatabaseHabit {
 }
 
 export const getHabits = (username: string): Promise<DatabaseHabit[]> => {
-  return axios.get(`${HOST_URL}/api/users/${username}/habits`)
+  return axios.get(`${HOST_URL}/api/habits/${username}`)
     .then(({data}) => data.habits)
+}
+
+interface DatabaseHabitCompletion {
+  habit_id: string,
+	date: string,
+	completed: boolean,
+}
+
+export const getHabitCompletion = (username: string, date: string): Promise<DatabaseHabitCompletion[]> => {
+  return axios.get(`${HOST_URL}/api/users/${username}/habit_completion/${date}`)
+    .then(({data}) => data.habit_completion)
 }
