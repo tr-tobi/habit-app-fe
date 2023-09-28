@@ -97,6 +97,6 @@ export default function NewHabitModal({visible, onClose, categoriesStates}: NewH
 
 
     return (
-        <HabitModal visible={visible} labels={labels} handleDismiss={handleDismiss} formStates={formStates} submit={submitHabit} errorStates={errorStates}/>
+        <HabitModal visible={visible} labels={labels} handleDismiss={handleDismiss} formStates={formStates} submit={submitHabit} errorStates={errorStates} />
     )
 }

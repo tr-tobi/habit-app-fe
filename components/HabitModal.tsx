@@ -5,20 +5,7 @@ import CategoryPicker from "./CategoryPicker";
 import ErrorBar from "./ErrorBar";
 import { Dispatch, SetStateAction } from "react";
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1, alignItems: 'center',
-        justifyContent: "center",
-        minWidth: "90%", maxHeight: "90%",
-        backgroundColor: "white", 
-    },
-    multilineTextInput: {
-        marginTop: 20, flex: 1, maxHeight: "30%", width: "80%", justifyContent: "flex-start"
-    },
-    margin: {
-        marginTop: 20
-    }
-  });
+
 
 interface HabitModalProps {
     visible: boolean
@@ -57,7 +44,7 @@ export default function HabitModal({visible, labels, handleDismiss, formStates, 
             <View style={styles.container}>
                 <Text style={{fontSize: 24}}>{labels.title}</Text>
                 
-                <TextInput label="Habit" value={name} onChangeText={(text) => setName(text)} style={{minWidth: "80%", marginTop: 20}}/>
+                <TextInput label="Habit" value={name} onChangeText={(text) => setName(text)} style={{minWidth: "80%", marginTop: 20, backgroundColor: "#D9D9D9"}}/>
                 
                 <CategoryPicker category={category} setCategory={setCategory} categories={categories} setCategories={setCategories}/>
 
@@ -74,3 +61,22 @@ export default function HabitModal({visible, labels, handleDismiss, formStates, 
         </Portal>
     )
 }
+
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1, alignItems: 'center',
+        justifyContent: "center",
+        minWidth: "90%", maxHeight: "90%",
+        backgroundColor: "white", 
+        color: "black",
+    },
+    multilineTextInput: {
+        marginTop: 20, flex: 1, maxHeight: "30%", width: "80%", justifyContent: "flex-start", backgroundColor: "#D9D9D9"
+    },
+    margin: {
+        marginTop: 20,
+        backgroundColor: "black",
+        
+    }
+  });
