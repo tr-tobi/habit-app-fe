@@ -65,3 +65,12 @@ interface UpdatedHabit {
 export const patchHabit = (username: string, updatedHabit: UpdatedHabit, id: string) => {
   return axios.patch(`${HOST_URL}/api/users/${username}/habits/${id}`, updatedHabit)
 }
+
+interface deleteHabitById {
+  username: string
+  id: string
+}
+
+export const deleteHabitById = (username: string, id: string) => {
+  return axios.delete(`${HOST_URL}/api/users/${username}/habits/${id}`)
+}

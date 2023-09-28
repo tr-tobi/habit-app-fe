@@ -8,8 +8,8 @@ interface DeleteHabitProps {
 
 export default function DeleteHabitDialog({visible, hideDialog, deleteHabit}: DeleteHabitProps) {
     function handleDelete() {
-        deleteHabit()
-        hideDialog()
+      hideDialog()
+      deleteHabit()
     }
     
     
