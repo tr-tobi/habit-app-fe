@@ -28,6 +28,7 @@ export const postSignUp = (
 export const postSignIn = (username: string, password: string) => {
   return axios.post(`${HOST_URL}/api/auth/${username}`, { username, password });
 };
+
 interface NewHabit {
   habit_name: string;
   habit_category: string;
@@ -36,7 +37,29 @@ interface NewHabit {
 }
 
 export const postHabit = (username: string, newHabit: NewHabit) => {
-  return axios
-    .post(`${HOST_URL}/api/users/${username}/habits`, newHabit)
-    .then(({ data }) => data.habit);
-};
+  return axios.post(`${HOST_URL}/api/users/${username}/habits`, newHabit)
+    .then(({data}) => data.habit)
+}
+
+interface NewHabitCompletion {
+  habit_id: string
+  username: string,
+  completed: boolean,
+}
+
+export const postHabitCompletion = (username: string, newHabitCompletion: NewHabitCompletion) => {
+  return axios.post(`${HOST_URL}/api/users/${username}/habit_completion`, newHabitCompletion)
+    .then(({data}) => data.habit)
+}
+
+interface UpdatedHabit {
+  
+  habit_name?: string
+  habit_category?: string
+  description?: string
+  occurence?: string[]
+
+}
+export const patchHabit = (username: string, updatedHabit: UpdatedHabit, id: string) => {
+  return axios.patch(`${HOST_URL}/api/users/${username}/habits/${id}`, updatedHabit)
+}

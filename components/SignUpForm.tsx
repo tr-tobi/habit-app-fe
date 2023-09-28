@@ -48,6 +48,7 @@ function SignupForm({ setIsLoggedIn, setCurrentUser }: SignUpFormProps) {
       setEmailValid(false);
       return;
     }
+
     postSignUp(username, email, await hashPassword(password))
       .then(() => {
         setIsLoggedIn(true);
