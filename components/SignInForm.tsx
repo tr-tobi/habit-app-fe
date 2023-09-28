@@ -23,7 +23,6 @@ function SignInForm({ setIsLoggedIn, setCurrentUser }: SignInFormProps) {
           setIsLoggedIn(true);
           setCurrentUser(username);
         } else {
-          console.error("Invalid username/password");
           setIsLoggedIn(false);
           setError("Invalid username/password");
         }
