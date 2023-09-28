@@ -23,7 +23,19 @@ function HabitsList({setHabitToEdit, openEdit}: HabitsListProps) {
 
     useEffect(() => {
         getHabits(currentUser)
+        .catch((err) => {
+            if (err.response.status === 404) {
+                console.log("habit data empty");
+                return []
+            }
+            else {
+                console.log("Failed to get habit completion");
+                return []
+            }
+        })
         .then((habits) => {
+            console.log("Got current habits");
+            
             setHabits(habits.map(habit => {
                 return {
                     id: habit.habit_id,
@@ -36,6 +48,16 @@ function HabitsList({setHabitToEdit, openEdit}: HabitsListProps) {
             })) 
 
             // getHabitCompletion(currentUser, new Date().toISOString().split('T')[0])
+            // .catch((err) => {
+            //     if (err.response.status === 404) {
+            //         console.log("comp data empty");
+            //         return []
+            //     }
+            //     else {
+            //         console.log("Failed to get habit completion");
+            //         return []
+            //     }
+            // })
             // .then((habitCompletion) => {
             //     const todaysHabits = getTodaysHabits()
             //     const newCompletions: Promise<AxiosResponse<any, any>>[] = []
@@ -65,9 +87,7 @@ function HabitsList({setHabitToEdit, openEdit}: HabitsListProps) {
             // })
         })
         .catch((err) => {
-            console.log(err);
-            
-            console.log("ERROR");
+            console.log(err)
         })
     }, [])
 
