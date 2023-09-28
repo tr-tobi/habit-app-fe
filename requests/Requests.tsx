@@ -93,3 +93,12 @@ export const createCategoryRequest = (
     newCategory,
   });
 };
+
+interface deleteHabitById {
+  username: string
+  id: string
+}
+
+export const deleteHabitById = (username: string, id: string) => {
+  return axios.delete(`${HOST_URL}/api/users/${username}/habits/${id}`)
+}
