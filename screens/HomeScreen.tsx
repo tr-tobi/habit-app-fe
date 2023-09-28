@@ -10,7 +10,7 @@ import { useUserContext } from "../contexts/UserContext";
 function HomeScreen (){
     const { setHabits } = useContext(HabitsContext) as HabitsContextType;
 
-    const blankHabit: Habit = {id: 0, name: "", description: "", category: "", occurrence: [], completed: false}
+    const blankHabit: Habit = {id: "", name: "", description: "", category: "", occurrence: [], completed: false}
     const [habitToEdit, setHabitToEdit]: [Habit, HabitSetter] = useState(blankHabit)
     const [showCreate, setShowCreate] = useState(false)
     const [showEdit, setShowEdit] = useState(false)
@@ -19,7 +19,7 @@ function HomeScreen (){
     const openEdit = () => setShowEdit(true)
     const closeCreate = () => setShowCreate(false)
     const closeEdit = () => setShowEdit(false)
-    const {currentUser} = useUserContext()
+    const {currentUser} = useUserContext()    
 
     function editHabit(newHabit: HabitChanges) {
       const username = currentUser
@@ -48,9 +48,11 @@ function HomeScreen (){
     const categoriesStates = {categories, setCategories}
     
     return (
-        <View>
+        <View style={{flex: 1, flexDirection: "column"}}>
             <HabitsList setHabitToEdit={setHabitToEdit} openEdit={openEdit}/>
-            <Button icon ="plus" mode="contained" onPress={handlePress}>Create New Habit</Button>
+            <View style={{flexBasis: "auto", margin: 10}}>
+              <Button icon ="plus" mode="contained" onPress={handlePress}>Create New Habit</Button>
+            </View>
             <NewHabitModal visible={showCreate} onClose={closeCreate} categoriesStates={categoriesStates}/>
             <EditHabitModal visible={showEdit} onClose={closeEdit} habit={habitToEdit} editHabit={editHabit} categoriesStates={categoriesStates}/>
         </View>

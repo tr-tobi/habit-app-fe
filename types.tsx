@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react"
 
 export interface Habit {
-    id: number
+    id: string
     name: string
     description: string
     category: string

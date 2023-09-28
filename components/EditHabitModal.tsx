@@ -36,6 +36,7 @@ export default function EditHabitModal({visible, onClose, habit, editHabit, cate
         const sortedDays = [...days].sort((a: string, b:string) => dayOrder[a] - dayOrder[b])
         
         const newHabit = {
+            id: habit.id,
             name: name.trim(),
             description: description.trim(),
             category: category,
