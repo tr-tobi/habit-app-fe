@@ -102,3 +102,11 @@ interface deleteHabitById {
 export const deleteHabitById = (username: string, id: string) => {
   return axios.delete(`${HOST_URL}/api/users/${username}/habits/${id}`)
 }
+
+interface UpdatedHabitCompletion {
+  completed: boolean
+}
+
+export const patchHabitCompletion = (username:string, UpdatedHabitCompletion: UpdatedHabitCompletion) => {
+  return axios.patch(`${HOST_URL}/api/users/${username}/habit_completion`, UpdatedHabitCompletion)
+}
