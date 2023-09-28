@@ -17,14 +17,11 @@ export const postSignUp = (
   email: string,
   password: string
 ) => {
-  return (
-    axios.post(`${HOST_URL}/api/users`,
-    {
-      username,
-      email,
-      password,
-    }
-  ));
+  return axios.post(`${HOST_URL}/api/users`, {
+    username,
+    email,
+    password,
+  });
 };
 
 export const postSignIn = (username: string, password: string) => {
@@ -32,39 +29,70 @@ export const postSignIn = (username: string, password: string) => {
 };
 
 interface NewHabit {
-  habit_name: string
-  habit_category: string,
-  description: string,
-  occurrence: string[],
+  habit_name: string;
+  habit_category: string;
+  description: string;
+  occurrence: string[];
 }
 
 export const postHabit = (username: string, newHabit: NewHabit) => {
-  return axios.post(`${HOST_URL}/api/users/${username}/habits`, newHabit)
-    .then(({data}) => data.habit)
-}
+  return axios
+    .post(`${HOST_URL}/api/users/${username}/habits`, newHabit)
+    .then(({ data }) => data.habit);
+};
 
 interface NewHabitCompletion {
-  habit_id: string
-  username: string,
-  completed: boolean,
+  habit_id: string;
+  username: string;
+  completed: boolean;
 }
 
 export const postHabitCompletion = (username: string, newHabitCompletion: NewHabitCompletion) => {
   return axios.post(`${HOST_URL}/api/users/${username}/habit_completion`, newHabitCompletion)
-    .then(({data}) => data.habit)
 }
 
 interface UpdatedHabit {
-  
-  habit_name?: string
-  habit_category?: string
-  description?: string
-  occurence?: string[]
-
+  habit_name?: string;
+  habit_category?: string;
+  description?: string;
+  occurence?: string[];
 }
 export const patchHabit = (username: string, updatedHabit: UpdatedHabit, id: string) => {
   return axios.patch(`${HOST_URL}/api/users/${username}/habits/${id}`, updatedHabit)
 }
+
+interface DatabaseHabit {
+  habit_id: string
+  habit_name: string
+  habit_category: string
+  description: string
+  occurrence: string[]
+}
+
+export const getHabits = (username: string): Promise<DatabaseHabit[]> => {
+  return axios.get(`${HOST_URL}/api/habits/${username}`)
+    .then(({data}) => data.habits)
+}
+
+interface DatabaseHabitCompletion {
+  habit_id: string,
+	date: string,
+	completed: boolean,
+}
+
+export const getHabitCompletion = (username: string, date: string): Promise<DatabaseHabitCompletion[]> => {
+  return axios.get(`${HOST_URL}/api/users/${username}/habit_completion/${date}`)
+    .then(({data}) => data.habit_completion)
+}
+
+export const createCategoryRequest = (
+  newCategory: string,
+  username: string
+) => {
+  return axios.post(`${HOST_URL}/api/categories/${username}`, {
+    newCategory,
+  });
+};
 
 interface deleteHabitById {
   username: string
