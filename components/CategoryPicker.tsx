@@ -9,14 +9,23 @@ import { useUserContext } from "../contexts/UserContext";
 
 const styles = StyleSheet.create({
   green: {
-    color: "green",
+    color: "black",
     fontSize: 19,
+    justifyContent: "center",
+    paddingTop: 5
   },
   red: {
     color: "red",
     fontSize: 19,
   },
+  dropdownContainer: {
+    maxWidth: "70%",
+  },
 });
+const dropdownStyle = {
+  backgroundColor: '#fff', 
+  
+};
 
 interface CategoryPickerProps {
   category: string;
@@ -101,7 +110,7 @@ export default function CategoryPicker({
           marginTop: 20,
         }}
       >
-        <View style={{ maxWidth: "70%" }}>
+        <View style={styles.dropdownContainer}>
           <DropDownPicker
             open={selectOpen}
             setOpen={setSelectOpen}
@@ -109,15 +118,16 @@ export default function CategoryPicker({
             setValue={setCategory}
             items={categories}
             setItems={setCategories}
+             style={dropdownStyle} 
           />
         </View>
         {/* {
                     category === "" ?  */}
         <Button
-          mode="elevated"
+          mode="contained"
           onPress={createPressed}
           labelStyle={styles.green}
-          style={{ justifyContent: "center" }}
+          style={{ justifyContent: "center", backgroundColor: "#D9D9D9" }}
         >
           +
         </Button>
