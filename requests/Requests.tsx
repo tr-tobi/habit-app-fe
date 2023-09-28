@@ -47,11 +47,6 @@ interface NewHabitCompletion {
   completed: boolean;
 }
 
-export const postHabitCompletion = (
-  username: string,
-  completed: boolean,
-}
-
 export const postHabitCompletion = (username: string, newHabitCompletion: NewHabitCompletion) => {
   return axios.post(`${HOST_URL}/api/users/${username}/habit_completion`, newHabitCompletion)
 }
