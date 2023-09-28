@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from "react";
-import { FlatList, View } from "react-native";
+import { StyleSheet, FlatList, View } from "react-native";
 import HabitCard from "./HabitCard";
 import { HabitsContext } from "../contexts/Habits";
 import { HabitSetter, HabitsContextType } from "../types";
@@ -43,8 +43,8 @@ function HabitsList({setHabitToEdit, openEdit}: HabitsListProps) {
 
     return (
         <View style={{flexBasis: 0, flexGrow: 1}}>
-            <Button onPress={() => setShowTodayOnly(!showTodayOnly)}>
-            {showTodayOnly ? "Show All Habits" : "Show Today's Habits"}
+            <Button style={styles.buttons} textColor="black" onPress={() => setShowTodayOnly(!showTodayOnly)}>
+            {showTodayOnly ? "List All" : "Todays Habits"}
             </Button>
             <FlatList
                 data={filteredHabits}
@@ -56,5 +56,17 @@ function HabitsList({setHabitToEdit, openEdit}: HabitsListProps) {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    text: {
+      color: "black",
+      fontSize: 20,
+      padding: 0.5,
+    },
+    buttons: {
+      width: 150,
+    
+    }
+  })
 
 export default HabitsList

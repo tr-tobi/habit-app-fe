@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, StyleSheet, Alert } from "react-native";
+import { View, Text, TextInput, StyleSheet } from "react-native";
 import { hashPassword } from "../utils/hashPassword";
 import { postSignIn } from "../requests/Requests";
 import { Button } from "react-native-paper";
@@ -12,16 +12,25 @@ interface SignInFormProps {
 function SignInForm({ setIsLoggedIn, setCurrentUser }: SignInFormProps) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  const [error, setError] = useState<string | null>(null);
   const handleSignIn = async () => {
+    setError(null);
     postSignIn(username, await hashPassword(password))
-      .then(() => {
-        setIsLoggedIn(true);
-        setCurrentUser(username);
+      .then(({ data }) => {
+        console.log(data.correct)
+        if (data.correct === true) {
+          console.log(data);
+          setIsLoggedIn(true);
+          setCurrentUser(username);
+        } else {
+          setIsLoggedIn(false);
+          setError("Invalid username/password");
+        }
       })
       .catch((error) => {
         console.log(error);
         setIsLoggedIn(false);
+        setError(error.message);
       });
   };
 
@@ -43,6 +52,11 @@ function SignInForm({ setIsLoggedIn, setCurrentUser }: SignInFormProps) {
         placeholder="Enter your password"
         secureTextEntry
       />
+      {error && (
+        <Text style={{ color: "red", textAlign: "center", paddingBottom: 7 }}>
+          Invalid username/password
+        </Text>
+      )}
 
       <Button style={styles.button} mode="elevated" onPress={handleSignIn}>
         <Text style={{ color: "white" }}>Sign In!</Text>

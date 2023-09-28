@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { StyleSheet, View, Text} from "react-native";
 import { Button } from "react-native-paper"
 import { HabitsList, NewHabitModal, EditHabitModal } from "../components";
 import { useState, useContext } from "react";
@@ -6,6 +6,7 @@ import { Habit, HabitSetter, HabitChanges, HabitsContextType } from "../types";
 import { HabitsContext } from "../contexts/Habits";
 import { patchHabit } from "../requests/Requests";
 import { useUserContext } from "../contexts/UserContext";
+import { CurrentRenderContext } from "@react-navigation/native";
 
 function HomeScreen (){
     const { setHabits } = useContext(HabitsContext) as HabitsContextType;
@@ -51,7 +52,7 @@ function HomeScreen (){
         <View style={{flex: 1, flexDirection: "column"}}>
             <HabitsList setHabitToEdit={setHabitToEdit} openEdit={openEdit}/>
             <View style={{flexBasis: "auto", margin: 10}}>
-              <Button icon ="plus" mode="contained" onPress={handlePress}>Create New Habit</Button>
+              <Button icon ="plus" mode="contained" onPress={handlePress} style={styles.buttons}>Create New Habit</Button>
             </View>
             <NewHabitModal visible={showCreate} onClose={closeCreate} categoriesStates={categoriesStates}/>
             <EditHabitModal visible={showEdit} onClose={closeEdit} habit={habitToEdit} editHabit={editHabit} categoriesStates={categoriesStates}/>
@@ -59,4 +60,15 @@ function HomeScreen (){
     )
 }
 
+const styles = StyleSheet.create({
+  text: {
+    color: "black",
+    fontSize: 20,
+    padding: 0.5,
+  },
+  buttons: {
+    backgroundColor: "black",
+  
+  }
+})
 export default HomeScreen;

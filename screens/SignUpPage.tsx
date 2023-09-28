@@ -14,7 +14,6 @@ export default function SignUpPage() {
 
   useEffect(() => {
     if (isLoggedIn) {
-      console.log("Signing in with:", currentUser);
       navigation.reset({
         index: 0,
         routes: [{ name: "Home" }],

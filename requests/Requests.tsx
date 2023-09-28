@@ -1,5 +1,6 @@
 import axios from "axios";
 
+
 import { HOST_URL } from "@env";
 
 export interface User {
@@ -17,14 +18,11 @@ export const postSignUp = (
   email: string,
   password: string
 ) => {
-  return (
-    axios.post(`${HOST_URL}/api/users`,
-    {
-      username,
-      email,
-      password,
-    }
-  ));
+  return axios.post(`${HOST_URL}/api/users`, {
+    username,
+    email,
+    password,
+  });
 };
 
 export const postSignIn = (username: string, password: string) => {
@@ -32,10 +30,10 @@ export const postSignIn = (username: string, password: string) => {
 };
 
 interface NewHabit {
-  habit_name: string
-  habit_category: string,
-  description: string,
-  occurrence: string[],
+  habit_name: string;
+  habit_category: string;
+  description: string;
+  occurrence: string[];
 }
 
 export const postHabit = (username: string, newHabit: NewHabit) => {
