@@ -92,6 +92,15 @@ function HabitsList({setHabitToEdit, openEdit}: HabitsListProps) {
                         completed: false,
                     }
                 }))
+                setHabits(currState => {
+                    return currState.map(habit => {
+                        const completion = habitCompletion.find(element => element.habit_id === habit.id)
+                        if (completion) {
+                            habit.completed = completion.completed
+                        }
+                        return habit
+                    })
+                })
             })
         })
         .catch((err) => {
