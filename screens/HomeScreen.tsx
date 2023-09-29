@@ -37,6 +37,9 @@ function HomeScreen (){
           return habits
         })
         patchHabit(username, updatedHabit, newHabit.id)
+        .catch((err) => {
+          console.log(err);
+        })
       }
 
     const [categories, setCategories] = useState([
