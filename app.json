@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "habit-app-fe",
-    "slug": "habit-app-fe",
+    "name": "Habitual",
+    "slug": "habitual",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -22,10 +22,16 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "softwareKeyboardLayoutMode":"pan"
+      "softwareKeyboardLayoutMode": "pan"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "3fcaf7f8-1cd7-47be-81a8-4df5da886856"
+      }
+    },
+    "owner": "christianharborow"
   }
 }
